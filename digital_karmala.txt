@@ -1,4 +1,4 @@
-134.209.147.69
+143.110.240.115
 
 _______________________________________
 
@@ -20,6 +20,9 @@ pip install django
 *****************************
 
 pip install -U channels[daphne]
+***************************
+
+pip install gunicorn
 
 ****************************
 
@@ -44,7 +47,7 @@ sudo nano digital_karmala.gunicorn.socket
 
 
 [Unit]
-Description=gunicorn socket
+Description=digital_karmala.gunicorn socket
 
 [Socket]
 ListenStream=/run/digital_karmala.gunicorn.sock
@@ -68,8 +71,8 @@ Requires=digital_karmala.gunicorn.socket
 After=network.target
 
 [Service]
-User=django
-Group=www-data
+User=root
+Group=root
 WorkingDirectory=/root/digital_karmala
 ExecStart=/root/digital_karmala/venv/bin/gunicorn \
           --access-logfile - \
@@ -85,8 +88,13 @@ WantedBy=multi-user.target
 
 **********************************************
 sudo systemctl start digital_karmala.gunicorn.socket
+sudo systemctl start digital_karmala.gunicorn.service
 
 sudo systemctl enable digital_karmala.gunicorn.socket
+sudo systemctl enable digital_karmala.gunicorn.service
+
+sudo systemctl status digital_karmala.gunicorn.socket
+sudo systemctl status digital_karmala.gunicorn.service
 
 ************************************************************
 Install and Setup Redis
@@ -108,10 +116,11 @@ sudo systemctl restart redis.service
 
 
 **********************************************
-Navigate to /etc/systemd/system/
+cd /etc/systemd/system/
 
-Create daphne.service. Notice the port is 8001. This is what we need to use for our WebSocket connections in the templates.
+  Create daphne.service. Notice the port is 8001. This is what we need to use for our WebSocket connections in the templates.
 
+sudo nano daphne.service
 
 [Unit]
 Description=WebSocket Daphne Service
@@ -211,7 +220,7 @@ cd /etc/nginx/sites-available
 sudo nano digitalkarmala.com
 
 server {
-    server_name bookkaryalay.com www.bookkaryalay.com;
+    server_name chat.narayaniorder.com www.chat.narayaniorder.com;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     
@@ -244,9 +253,9 @@ sudo systemctl reload nginx
 
 *************
 
-service gunicorn restart
-
-
+service digital_karmala.gunicorn restart
+-------------------
+sudo systemctl daemon-reload
 
 --------------------------------------- ssl ------------------
 
