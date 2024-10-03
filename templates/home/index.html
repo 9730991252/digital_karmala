@@ -15,9 +15,11 @@
     }
 
     .container{
+        pointer-events: none;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr ));
+        gap: 5px;
+        row-gap: 10px;
         justify-content: center;
     }
     leader_box{
@@ -43,7 +45,8 @@ box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
         font-size: 21px;
     }
     .title{
-        padding: 10px;
+        margin-top: -30px;
+        padding: 20px;
     }
 </style>
 <br>
