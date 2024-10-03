@@ -1,5 +1,11 @@
 143.110.240.115
 
+cd digital_karmala
+git pull
+sudo systemctl daemon-reload
+service digital_karmala.gunicorn restart
+exit
+
 _______________________________________
 
 
