@@ -1,0 +1,57 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/navbar.html' %}
+{% load static %}
+<style>
+    .flex{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .container{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 10px;
+    }
+    leader_box{
+        text-align: center;
+        width: 150px;
+        height: 200px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        -webkit-box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
+-moz-box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
+box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
+    }
+    img{
+        width: 100px;
+    }
+    .name{
+        margin-top: 10px;
+    }
+    name{
+        font-weight: 600;
+        font-size: 21px;
+    }
+</style>
+<div class="container">
+{% for l in leader %}
+        <leader_box>
+            <div class="img"><img src="{% static 'img/leader.png' %}" alt=" "></div>
+            <div class="name"><name>{{l.name}}</name></div>
+            <div class="flex">
+                <div class="members"><i class="fa-solid fa-user-group"></i> 1500</div>
+                <div class="sms"><i class="fa-solid fa-comment"></i> 10000</div>
+            </div>
+        </leader_box>
+{% endfor %}
+</div>
+
+
+
+{% endblock content %}

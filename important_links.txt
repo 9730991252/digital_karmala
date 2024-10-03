@@ -1,0 +1,1 @@
+https://github.com/mitchtabian/HOWTO-django-channels-daphne?tab=readme-ov-file#Deploying-Django-Channels-with-Daphne-&-Systemd

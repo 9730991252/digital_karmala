@@ -1,0 +1,14 @@
+<style>
+    a{
+            width: 100%;
+        }
+        .mobile{
+            display: flex;
+            gap: 10px;
+        }
+</style>
+
+<div class="mobile">
+    <a  href="/sunil/office_staff/" class="my-1 {% if request.path == '/sunil/office_staff/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Office Staff</a>
+    <a  href="/sunil/leader/" class="my-1 {% if request.path == '/sunil/leader/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Leader</a>
+</div>

@@ -1,0 +1,253 @@
+134.209.147.69
+
+_______________________________________
+
+
+git clone https://github.com/9730991252/digital_karmala.git
+
+_______________________________________
+********** Create Virtual env *****
+virtualenv venv
+
+********** Activate Virtual env ****
+
+source venv/bin/activate
+
+***** install django ******
+
+pip install django
+
+*****************************
+
+pip install -U channels[daphne]
+
+****************************
+
+apt install daphne
+
+***************
+
+deactivate
+
+******************************************************
+Creating systemd Socket and Service Files for Gunicorn
+
+gunicorn --bind 0.0.0.0:8000 digital_karmala.wsgi
+
+*****************************
+
+Configure systemd to execute gunicorn via a gunicorn.socket file
+
+cd /etc/systemd/system/
+
+sudo nano digital_karmala.gunicorn.socket
+
+
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/digital_karmala.gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+
+
+
+******************************************
+Create gunicorn service to run the WSGI application (the django app)
+
+cd /etc/systemd/system/
+
+sudo nano digital_karmala.gunicorn.service 
+
+
+[Unit]
+Description=gunicorn daemon
+Requires=digital_karmala.gunicorn.socket
+After=network.target
+
+[Service]
+User=django
+Group=www-data
+WorkingDirectory=/root/digital_karmala
+ExecStart=/root/digital_karmala/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/digital_karmala.gunicorn.sock \
+          digital_karmala.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+**********************************************
+sudo systemctl start digital_karmala.gunicorn.socket
+
+sudo systemctl enable digital_karmala.gunicorn.socket
+
+************************************************************
+Install and Setup Redis
+
+sudo apt install redis-server
+
+cd /etc/redis/
+
+sudo systemctl restart redis.service
+
+sudo systemctl status redis
+
+******************
+Confirm Redis is running at 127.0.0.1. Port should be 6379 by default.
+
+sudo netstat -lnp | grep redis
+
+sudo systemctl restart redis.service
+
+
+**********************************************
+Navigate to /etc/systemd/system/
+
+Create daphne.service. Notice the port is 8001. This is what we need to use for our WebSocket connections in the templates.
+
+
+[Unit]
+Description=WebSocket Daphne Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/digital_karmala
+ExecStart=/root/digital_karmala/venv/bin/python /root/digital_karmala/venv/bin/daphne -b 0.0.0.0 -p 8001 digital_karmala.asgi:application
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+
+*************************************
+
+systemctl daemon-reload
+
+systemctl start daphne.service
+
+systemctl status daphne.service
+
+You should see something like this. If you don't
+, go back and redo this section. Check that your filepaths are all
+exactly the same as mine in daphne.service. That is the #1 reason people have issues.
+
+CTRL+C
+
+***********************************
+
+Create the script to run daphne
+Navigate to /root
+
+create boot.sh
+
+sudo nano boot.sh
+
+#!/bin/sh
+sudo systemctl start daphne.service
+
+--------
+
+chmod u+x /root/boot.sh
+
+*********************************
+
+Tell systemd to run the bash script when the server boots
+Navigate to /etc/systemd/system
+
+cd /etc/systemd/system
+
+create on_boot.service
+
+sudo nano on_boot.service
+
+[Service]
+ExecStart=/root/boot.sh
+
+[Install]
+WantedBy=default.target
+
+
+**************************
+
+systemctl daemon-reload
+
+sudo systemctl start on_boot
+
+sudo systemctl enable on_boot
+
+ufw allow 8001
+
+systemctl status on_boot.service
+
+sudo journalctl -u on_boot.service
+
+systemctl status daphne.service
+
+sudo journalctl -u on_boot.service
+
+sudo journalctl -u daphne.service
+
+****************************************
+
+
+
+
+
+
+Update Nginx config
+Earlier we configured Nginx to proxy pass to gunicorn. We need to add the new domain to that configuration.
+
+cd /etc/nginx/sites-available
+
+sudo nano digitalkarmala.com
+
+server {
+    server_name bookkaryalay.com www.bookkaryalay.com;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/digital_karmala.gunicorn.sock;
+    }
+
+    location /ws/ {
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:8001;
+    }
+
+}
+
+
+########## Enable Virtual Host or Create Symbolic Link of Virtual Host File ########
+
+sudo ln -s /etc/nginx/sites-available/digitalkarmala.com /etc/nginx/sites-enabled/digitalkarmala.com
+
+***************************
+sudo systemctl reload nginx
+
+sudo nginx -t
+
+sudo systemctl reload nginx
+
+*************
+
+service gunicorn restart
+
+
+
+--------------------------------------- ssl ------------------
+
+sudo certbot --nginx
