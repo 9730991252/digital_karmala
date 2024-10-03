@@ -6,3 +6,8 @@ class Leader(models.Model):
     mobile = models.IntegerField()
     added_date = models.DateField(auto_now_add=True)
     status = models.IntegerField()
+    
+class Group(models.Model):
+    leader = models.ForeignKey(Leader,on_delete=models.PROTECT,null=True)
+    status = models.IntegerField(default=1)
+    added_date = models.DateField(auto_now_add=True)
