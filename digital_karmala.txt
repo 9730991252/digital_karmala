@@ -1,4 +1,4 @@
-165.232.183.185
+159.89.161.171
 
 cd digital_karmala
 git pull
@@ -35,6 +35,10 @@ pip install -U channels[daphne]
 ***************************
 
 pip install gunicorn
+
+**********************
+
+pip install channels_redis
 
 ****************************
 
@@ -233,7 +237,7 @@ cd /etc/nginx/sites-available
 sudo nano digitalkarmala.com
 
 server {
-    server_name 143.110.187.69 digitalkarmala.com www.digitalkarmala.com;
+    server_name 159.89.161.171 digitalkarmala.com www.digitalkarmala.com;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     
@@ -271,6 +275,7 @@ service digital_karmala.gunicorn restart
 sudo systemctl daemon-reload
 
 --------------------------------------- ssl ------------------
+sudo apt install certbot python3-certbot-nginx
 
 sudo certbot --nginx
 
