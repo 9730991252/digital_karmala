@@ -100,7 +100,7 @@
             <h6>Welcome - Guest</h6>
             {% endif %}
         </div>
-        <div class="group_name"><b><i>{{group.name}} &nbsp; </i></b> <h6> मध्ये हार्दिक स्वागत</h6></div>
+        <div class="group_name"><b><i>{% if village == 1%}{{group.village.name}}{% else %}{{group.leader.name}}{% endif %} &nbsp; </i></b> <h6> मध्ये हार्दिक स्वागत</h6></div>
         {% if village == 0 and user_login == 1 %}
         <a class="a" href="/group/0/{{user.village_id}}/"><div class="village_name">{{user.village.name}} - गावाच्या गटासाठी येथे क्लिक करा </div></a>
         {% endif %}
@@ -174,6 +174,7 @@
         + roomName
         + '/'
     );
+    console.log(chatSocket)
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);

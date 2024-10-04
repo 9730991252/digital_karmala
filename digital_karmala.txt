@@ -306,7 +306,13 @@ sudo systemctl daemon-reload
 
 
 
+****************************
 
+
+sudo systemctl status digital_karmala.gunicorn
+sudo systemctl status redis
+systemctl status daphne.service
+systemctl status on_boot.service
 
 
 
