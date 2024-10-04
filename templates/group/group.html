@@ -14,6 +14,8 @@
         padding: 10px;
     }
     footer{
+        padding: 2px;
+        background-color: rgb(184, 184, 184);
         display: flex;
         justify-content: center;
         position: fixed;
@@ -25,23 +27,29 @@
         img{
             height: 50px;
             width: 50px;
-            margin-left: -15px;
             cursor: pointer;
+
         }
     }
     .input{
         height: 90%;
-        width: 100%;
+        width: 90%;
         input{
             height: 50px;
-            width: 90%;
+            width: 98%;
             border-radius: 20px;
             text-align: center;
             border: 1px solid rgba(0, 0, 0, 0.3);
         }
     }
+    .img_box{
+        width: 10%;
+    }
     textarea{
         width: 90%;
+        cursor: no-drop;
+        font-size: 25px;
+        
     }
 </style>
 
@@ -55,11 +63,11 @@
 
 <footer>
     <div class="input"><input placeholder="Message" id="chat-message-input" type="text" required></div>
-    <div><img id="chat-message-submit" src="{% static 'img/send-message.png' %}" alt=" " id="chat_messsage_submit"></div>
+    <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></div>
 </footer>
-<br><br><br><br><br><br>
+<br><br><br>
+<div class="text-center"><textarea id="chat-log"  rows="10" readonly></textarea><br></div>
 
-<div class="text-center"><textarea id="chat-log"  rows="1000"></textarea><br></div>
 
 <script>
     const roomName = JSON.parse(document.getElementById('room-name').value);
