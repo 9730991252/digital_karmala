@@ -1,4 +1,4 @@
-143.110.187.69
+165.232.183.185
 
 cd digital_karmala
 git pull
@@ -13,6 +13,7 @@ git clone https://github.com/9730991252/digital_karmala.git
 
 _______________________________________
 ********** Create Virtual env *****
+
 virtualenv venv
 
 ********** Activate Virtual env ****
@@ -165,7 +166,8 @@ CTRL+C
 ***********************************
 
 Create the script to run daphne
-Navigate to /root
+
+cd
 
 
 sudo nano boot.sh
