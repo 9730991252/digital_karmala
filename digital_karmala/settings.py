@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'home',
     'sunil',
     'group',
+    'ajax',
+    'user'
 ]
 
 MIDDLEWARE = [

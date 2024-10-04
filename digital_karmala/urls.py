@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('sunil/', include('sunil.urls')),
     path('group/', include('group.urls')),
+    path('ajax/', include('ajax.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

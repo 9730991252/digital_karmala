@@ -4,14 +4,30 @@
 {% block content %}
 {% load static %}
 <style>
-    name{
+    .group_name_box{
         font-size: larger;
         position: fixed;
         top: 0;
         background-color: rgb(241, 241, 241);
         width: 100%;
+        height: 50px;
         left: 0;
         padding: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        .a{
+            background-color: rgb(206, 206, 255);
+            grid-column-start: 1;
+            grid-column-end: 3;
+            text-decoration: none;
+        }
+        .village_name{
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: black;
+        }
     }
     footer{
         padding: 2px;
@@ -26,6 +42,12 @@
         padding-right: 5px;
         img{
             height: 50px;
+            width: 50px;
+            cursor: pointer;
+
+        }
+        button{
+            height: 30px;
             width: 50px;
             cursor: pointer;
 
@@ -51,29 +73,96 @@
         font-size: 25px;
         
     }
+    .TAL{
+        display: flex;
+        gap: 10px;
+        .form_check{
+            padding: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+    }
+    .group_name{
+        display: flex;
+    }
 </style>
+    <div class="group_name_box">
+        <div class="user_name">
+            {% if user_login == 1 %}
+            <h6>Welcome - {{user.name}}</h6>
+            {% else %}
+            {% endif %}
+        </div>
+        <div class="group_name"><b><i>{{group.name}} &nbsp; </i></b> <h6> मध्ये हार्दिक स्वागत</h6></div>
+        {% if village == 0 and user_login == 1 %}
+        <a class="a" href="/group/0/{{user.village_id}}/"><div class="village_name">{{user.village.name}} - गावाच्या गटासाठी येथे क्लिक करा </div></a>
+        {% endif %}
+    </div>
 
-<div class="container text-center">
-    <name><b><i>{{group.name}}</i></b></name>
-</div>
+
 
 <input type="hidden" id="room-name" value="{{group.id}}">
-
-
-
 <footer>
-    <div class="input"><input placeholder="Message" id="chat-message-input" type="text" required></div>
+    {% if user_login == 1 %}
+    <div class="input"><input  placeholder="Message" id="chat-message-input" type="text" required></div>
     <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></div>
+    {% elif user_login == 0 %}
+    <div class="input"><input  placeholder="Enter Your Mobile Number" id="mobile"   type="number" required></div>
+    <div class="img_box"><button  class="btn btn-primary btn-sm" onclick="check_mobile_number()">Login</button></div>
+    {% endif %}
 </footer>
 <br><br><br>
 <div class="text-center"><textarea id="chat-log"  rows="10" readonly></textarea><br></div>
 
 
+<!------------------------------------------------------------------>
+<div>
+    <div class="modal" id="user_form" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">माहिती भरा</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">{% csrf_token %}
+                    <div class="mb-3">
+                      <label for="name" class="form-label">नाव</label>
+                      <input type="text" class="form-control" name="name" placeholder="name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="mobile_number" class="form-label">मोबाईल</label>
+                      <input type="number" id="mobile_number" class="form-control" name="mobile" placeholder="mobile" readonly>
+                    </div>
+                    <div class="mb-3 TAL">
+                        {% for t in taluka %}
+                        <div class="form_check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="chek_box{{t.id}}" onclick="chek_box('{{t.id}}')" name="taluka" >
+                                <label class="form-check-label" for="flexCheckChecked">{{t.name}}</label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div id="village"></div>
+                    <button type="submit" name="Add_User" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<!------------------------------------------------------------------>
+
 <script>
     const roomName = JSON.parse(document.getElementById('room-name').value);
 
     const chatSocket = new WebSocket(
-        'wss://'
+        'ws://'
         + window.location.host
         + '/ws/chat/'
         + roomName
@@ -104,6 +193,46 @@
         }));
         messageInputDom.value = '';
     };
+    function check_mobile_number(){
+        mobile_number = document.getElementById('mobile').value;
+        if( mobile_number.length <= 9){
+            alert('pleas Enter 10 digit number ')
+        }
+        if (mobile_number.length >= 11 ){
+            alert('only 10 digit number ')
+        }
+        if( mobile_number.length == 10){
+            $.ajax({
+                url: "{% url 'check_mobile_number' %}",
+                method: "GET",
+                data:{
+                    mobile_number:mobile_number
+                      },
+                    success: function(res){
+                        if (res.status == 0){
+                            $("#user_form").modal('show');
+                            document.getElementById('mobile_number').value = res.mobile_number
+                        }
+                        if (res.status == 1){
+                            location.reload();
+                        }
+                        
+                    }
+            })
+        }
+    }
+    function chek_box(id){
+        $.ajax({
+                url: "{% url 'check_taluka_village' %}",
+                method: "GET",
+                data:{
+                    id:id
+                      },
+                    success: function(res){
+                        document.getElementById('village').innerHTML = res.village_list;
+                    }
+            })
+    }
 </script>
 
 {% endblock content %}
