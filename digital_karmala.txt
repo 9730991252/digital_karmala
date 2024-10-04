@@ -1,4 +1,4 @@
-143.110.240.115
+143.110.187.69
 
 cd digital_karmala
 git pull
@@ -167,7 +167,6 @@ CTRL+C
 Create the script to run daphne
 Navigate to /root
 
-create boot.sh
 
 sudo nano boot.sh
 
@@ -185,9 +184,10 @@ Navigate to /etc/systemd/system
 
 cd /etc/systemd/system
 
-create on_boot.service
 
 sudo nano on_boot.service
+
+
 
 [Service]
 ExecStart=/root/boot.sh
@@ -231,7 +231,7 @@ cd /etc/nginx/sites-available
 sudo nano digitalkarmala.com
 
 server {
-    server_name chat.narayaniorder.com www.chat.narayaniorder.com;
+    server_name 143.110.187.69 digitalkarmala.com www.digitalkarmala.com;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     
@@ -271,3 +271,49 @@ sudo systemctl daemon-reload
 --------------------------------------- ssl ------------------
 
 sudo certbot --nginx
+
+
+sudo certbot --nginx -d digitalkarmala.com -d www.digitalkarmala.com
+
+*******************************************************
+Update daphne.service
+
+cd /etc/systemd/system
+
+sudo nano daphne.service
+
+
+
+[Unit]
+Description=WebSocket Daphne Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/digital_karmala
+ExecStart=/root/digital_karmala/venv/bin/python /root/digital_karmala/venv/bin/daphne -e ssl:8001:privateKey=/etc/letsencrypt/live/digitalkarmala.com/privkey.pem:certKey=/etc/letsencrypt/live/digitalkarmala.com/fullchain.pem digital_karmala.asgi:application  
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+-------------
+
+service digital_karmala.gunicorn restart
+service daphne restart
+sudo systemctl daemon-reload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
