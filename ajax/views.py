@@ -18,7 +18,7 @@ def check_mobile_number(request):
 def check_taluka_village(request):
     if request.method == 'GET':
         id = request.GET['id']
-        village = Village.objects.filter(taluka_id=id)
+        village = Village.objects.filter(taluka_id=id).order_by('name')
         context={
             'village':village
         }
