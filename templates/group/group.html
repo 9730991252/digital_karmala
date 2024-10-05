@@ -225,7 +225,6 @@
 <script>
     user_id = '{{user.id}}'
     user_name = '{{user.name}}'
-    console.log(user_name)
     user_village_name = '{{user.village.name}}'
 
     const roomName = JSON.parse(document.getElementById('room-name').value);
@@ -239,12 +238,13 @@
     );
 
     chatSocket.onmessage = function(e) {
+        console.log(e.data)
+        
         const data = JSON.parse(e.data);
-        console.log(data)
         t = `
         <div class="msg_box mb-3">
             <div class="flex">
-                <div class="user">${data.name_user} : </div>
+                <div class="user">${data.name} : </div>
                 <div class="village_name_in_chat"> : </div>
             </div>
             <div>${data.message}</div>

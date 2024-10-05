@@ -52,4 +52,4 @@ class ChatConsumer(WebsocketConsumer):
         user_id = event["user_id"]
         user = User.objects.filter(id=user_id).first()
         # Send message to WebSocket
-        self.send(text_data=json.dumps({"message": message,'name_user':user.name}))
+        self.send(text_data=json.dumps({"message": message , "name":'kale'}))
