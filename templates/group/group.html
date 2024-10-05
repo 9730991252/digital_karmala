@@ -91,36 +91,70 @@
     .group_name{
         display: flex;
     }
-
+    .flex{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .msg_box{
+        background-color: rgb(185, 249, 228);
+        border-radius: 10px;
+        padding: 10px;
+        .user{
+            font-weight: 700;
+            font-size: 12px;
+        }
+        .village_name_in_chat{
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .date{
+            font-size: 10px;
+            font-weight: 700;
+            width: fit-content;
+            margin-left: auto;
+        }
+    }
 </style>
-    <div class="group_name_box">
-        <div class="user_name">
-            {% if user_login == 1 %}
-                <h6>Welcome - {{user.name}}</h6>
-            {% else %}    
-                <h6>Welcome - Guest</h6>
-            {% endif %}
-        </div>
-        <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b> <h6> मध्ये हार्दिक स्वागत</h6></div>
-        {% if village == 0 and user_login == 1 %}
-        <a class="a" href="/group/0/{{user.village_id}}/"><div class="village_name">{{user.village.name}} - गावाच्या गटासाठी येथे क्लिक करा </div></a>
+<!-------------------------------------------->
+<div class="group_name_box">
+    <div class="user_name">
+        {% if user_login == 1 %}
+        <h6>Welcome - {{user.name}}</h6>
+        {% else %}    
+        <h6>Welcome - Guest</h6>
         {% endif %}
     </div>
-
-
-
-<input type="hidden" id="room-name" value="{{group.id}}">
-<footer>
-    {% if user_login == 1 %}
-    <div class="input"><input  placeholder="Message" id="chat-message-input" type="text" required></div>
-    <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></div>
-    {% elif user_login == 0 %}
-    <div class="input"><input  placeholder="Enter Your Mobile Number" id="mobile"   type="number" required></div>
-    <div class="img_box"><button  class="btn btn-primary btn-sm" onclick="check_mobile_number()">Login</button></div>
+    <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b> <h6> मध्ये हार्दिक स्वागत</h6></div>
+    {% if village == 0 and user_login == 1 %}
+    <a class="a" href="/group/0/{{user.village_id}}/"><div class="village_name">{{user.village.name}} - गावाच्या गटासाठी येथे क्लिक करा </div></a>
     {% endif %}
-</footer>
+</div>
+<input type="hidden" id="room-name" value="{{group.id}}">
+<!-------------------------------------------->
 <br><br><br>
+
+<!-------------------chat--------------------->
+
+<div class="container">
+    {% for c in chat %}
+    <div class="msg_box">
+        <div class="flex">
+            <div class="user">{{c.user.name}} : </div>
+            <div class="village_name_in_chat">{{c.user.village.name}} : </div>
+        </div>
+        <div>{{c.msg}}</div>
+        <div class="date">
+            <div>{{c.added_date}}</div>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+
 <div class="text-center"><textarea id="chat-log"  rows="10" readonly></textarea><br></div>
+
+<!-------------------chat end--------------------->
 
 
 <!------------------------------------------------------------------>
@@ -164,6 +198,15 @@
       </div>
 </div>
 <!------------------------------------------------------------------>
+<footer>
+    {% if user_login == 1 %}
+    <div class="input"><input  placeholder="Message" id="chat-message-input" type="text" required></div>
+    <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></div>
+    {% elif user_login == 0 %}
+    <div class="input"><input  placeholder="Enter Your Mobile Number" id="mobile"   type="number" required></div>
+    <div class="img_box"><button  class="btn btn-primary btn-sm" onclick="check_mobile_number()">Login</button></div>
+    {% endif %}
+</footer>
 
 <script>
     user_id = '{{user.id}}'
@@ -172,7 +215,7 @@
     const roomName = JSON.parse(document.getElementById('room-name').value);
 
     const chatSocket = new WebSocket(
-        'wss://'
+        'ws://'
         + window.location.host
         + '/ws/chat/'
         + roomName

@@ -8,6 +8,7 @@ def group(request, leader_id, village_id):
         if Leader.objects.filter(id=leader_id).exists():
             leader = Leader.objects.filter(id=leader_id).first()
             group = check_leader_group(leader.id)
+            chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1)
             user = ''
             village = 0
             if request.session.has_key('user_mobile'):
@@ -31,6 +32,7 @@ def group(request, leader_id, village_id):
         if Village.objects.filter(id=village_id).exists():
             village = Village.objects.filter(id=village_id).first()
             group = check_village_group(village.id)
+            chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1)
             mobile = request.session['user_mobile']
             user = User.objects.filter(mobile=mobile).first()
             check_user_selected_village_group(user.id, village_id)
@@ -44,6 +46,7 @@ def group(request, leader_id, village_id):
         'user':user,
         'taluka':Taluka.objects.filter(status=1),
         'village':village,
+        'chat':chat
     }
     return render(request, 'group/group.html', context)
 
