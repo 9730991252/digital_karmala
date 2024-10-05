@@ -1,4 +1,4 @@
-159.89.161.171
+139.59.63.75
 
 cd digital_karmala
 git pull
