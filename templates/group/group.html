@@ -238,9 +238,8 @@
     );
 
     chatSocket.onmessage = function(e) {
-        console.log(e.data)
-        
         const data = JSON.parse(e.data);
+        console.log(data)
         t = `
         <div class="msg_box mb-3">
             <div class="flex">
