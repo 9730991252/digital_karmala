@@ -152,7 +152,9 @@
     {% endfor %}
 </div>
 
-<div class="text-center"><textarea id="chat-log"  rows="10" readonly></textarea><br></div>
+<div class="container">
+    <div id="chat-log"></div>
+</div>
 
 <!-------------------chat end--------------------->
 
@@ -211,6 +213,7 @@
 <script>
     user_id = '{{user.id}}'
     user_name = '{{user.name}}'
+    user_village_name = '{{user.village.name}}'
 
     const roomName = JSON.parse(document.getElementById('room-name').value);
 
@@ -221,11 +224,24 @@
         + roomName
         + '/'
     );
-    console.log(chatSocket)
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        document.querySelector('#chat-log').value += (data.message + '\n');
+        console.log(data)
+        t = `
+        <div class="msg_box">
+            <div class="flex">
+                <div class="user">${data.user_name} : </div>
+                <div class="village_name_in_chat">${user_village_name} : </div>
+            </div>
+            <div>${data.message}</div>
+            <div class="date">
+                <div>12:50</div>
+            </div>
+        </div>
+        <br>
+        `
+        document.getElementById('chat-log').innerHTML += t;
     };
 
     chatSocket.onclose = function(e) {
@@ -258,6 +274,7 @@
                 'message': message,
                 'user_id': user_id,
                 'user_name': user_name,
+                'user_village_name': user_village_name,
             }));
         }
         window.scrollBy(0,1000);

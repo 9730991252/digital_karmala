@@ -1,4 +1,4 @@
-139.59.63.75
+167.71.234.29
 
 cd digital_karmala
 git pull
@@ -28,20 +28,9 @@ python3 manage.py migrate
 ***** install django ******
 
 pip install django
-
-**********************
-
 pip install django-ckeditor==6.5.1
-
-*****************************
-
 pip install -U channels[daphne]
-***************************
-
 pip install gunicorn
-
-**********************
-
 pip install channels_redis
 
 ****************************
@@ -56,6 +45,7 @@ deactivate
 Creating systemd Socket and Service Files for Gunicorn
 
 gunicorn --bind 0.0.0.0:8000 digital_karmala.wsgi
+apt install gunicorn
 
 *****************************
 
@@ -209,9 +199,7 @@ WantedBy=default.target
 **************************
 
 systemctl daemon-reload
-
 sudo systemctl start on_boot
-
 sudo systemctl enable on_boot
 
 ufw allow 8001
@@ -222,9 +210,7 @@ sudo journalctl -u on_boot.service
 
 systemctl status daphne.service
 
-sudo journalctl -u on_boot.service
 
-sudo journalctl -u daphne.service
 
 
 clear
@@ -243,7 +229,7 @@ cd /etc/nginx/sites-available
 sudo nano digitalkarmala.com
 
 server {
-    server_name 139.59.63.75 digitalkarmala.com www.digitalkarmala.com;
+    server_name 167.71.234.29 digitalkarmala.com www.digitalkarmala.com;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     
