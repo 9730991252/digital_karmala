@@ -7,4 +7,4 @@ def add_user(name, mobile, village):
         mobile=mobile,
         village_id=village
     ).save()
-    
+
