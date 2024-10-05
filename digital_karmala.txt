@@ -226,6 +226,8 @@ sudo journalctl -u on_boot.service
 
 sudo journalctl -u daphne.service
 
+
+clear
 ****************************************
 
 
@@ -241,7 +243,7 @@ cd /etc/nginx/sites-available
 sudo nano digitalkarmala.com
 
 server {
-    server_name 159.89.161.171 digitalkarmala.com www.digitalkarmala.com;
+    server_name 139.59.63.75 digitalkarmala.com www.digitalkarmala.com;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     
