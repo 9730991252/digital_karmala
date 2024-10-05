@@ -66,18 +66,25 @@
             font-size: 20px;
             font-weight: 700;
         }
+        textarea{
+            height: 50px;
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            font-size: 20px;
+            font-weight: 700;
+            resize: none;
+            padding: 5px;
+        }
+        textarea::-webkit-scrollbar{
+            width: 0;
+        }
     }
     .img_box{
         width: 20%;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    textarea{
-        width: 90%;
-        cursor: no-drop;
-        font-size: 25px;
-        
     }
     .TAL{
         display: flex;
@@ -132,13 +139,13 @@
 </div>
 <input type="hidden" id="room-name" value="{{group.id}}">
 <!-------------------------------------------->
-<br><br><br>
+<br><br><br><br><br><br>
 
 <!-------------------chat--------------------->
 
 <div class="container">
     {% for c in chat %}
-    <div class="msg_box">
+    <div class="msg_box mb-3">
         <div class="flex">
             <div class="user">{{c.user.name}} : </div>
             <div class="village_name_in_chat">{{c.user.village.name}} : </div>
@@ -148,7 +155,6 @@
             <div>{{c.added_date}}</div>
         </div>
     </div>
-    <br>
     {% endfor %}
 </div>
 
@@ -199,10 +205,14 @@
         </div>
       </div>
 </div>
+
+
+<br><br><br>
 <!------------------------------------------------------------------>
+
 <footer>
     {% if user_login == 1 %}
-    <div class="input"><input  placeholder="Message" id="chat-message-input" type="text" required></div>
+    <div class="input"><textarea placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
     <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></div>
     {% elif user_login == 0 %}
     <div class="input"><input  placeholder="Enter Your Mobile Number" id="mobile"   type="number" required></div>
@@ -210,9 +220,12 @@
     {% endif %}
 </footer>
 
+
+
 <script>
     user_id = '{{user.id}}'
     user_name = '{{user.name}}'
+    console.log(user_name)
     user_village_name = '{{user.village.name}}'
 
     const roomName = JSON.parse(document.getElementById('room-name').value);
@@ -229,19 +242,19 @@
         const data = JSON.parse(e.data);
         console.log(data)
         t = `
-        <div class="msg_box">
+        <div class="msg_box mb-3">
             <div class="flex">
-                <div class="user">${data.user_name} : </div>
-                <div class="village_name_in_chat">${user_village_name} : </div>
+                <div class="user">${data.data.user_name} : </div>
+                <div class="village_name_in_chat">${data.data.user_village_name} : </div>
             </div>
-            <div>${data.message}</div>
+            <div>${data.data.message}</div>
             <div class="date">
-                <div>12:50</div>
+                <div>${new Date().toLocaleString()}</div>
             </div>
         </div>
-        <br>
         `
         document.getElementById('chat-log').innerHTML += t;
+        document.documentElement.scrollTop = document.documentElement.scrollHeight;
     };
 
     chatSocket.onclose = function(e) {
@@ -277,7 +290,7 @@
                 'user_village_name': user_village_name,
             }));
         }
-        window.scrollBy(0,1000);
+        document.documentElement.scrollTop = document.documentElement.scrollHeight;
         messageInputDom.value = '';
     }
 
@@ -323,6 +336,12 @@
                     }
             })
     }
+    const textarea = document.querySelector("textarea");
+      textarea.addEventListener("keyup", e =>{
+        textarea.style.height = "63px";
+        let scHeight = e.target.scrollHeight;
+        textarea.style.height = `${scHeight}px`;
+      });
 </script>
 
 {% endblock content %}
