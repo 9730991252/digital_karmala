@@ -240,21 +240,20 @@
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        console.log(e.data)
+        console.log(data)
         t = `
         <div class="msg_box mb-3">
             <div class="flex">
-                <div class="user">${data.user_name} : </div>
-                <div class="village_name_in_chat">${data.user_village_name} : </div>
+                <div class="user">${data.data.user_name} : </div>
+                <div class="village_name_in_chat">${data.data.user_village_name} : </div>
             </div>
-            <div>${data.message}</div>
+            <div>${data.data.message}</div>
             <div class="date">
                 <div>${new Date().toLocaleString()}</div>
             </div>
         </div>
         `
         document.getElementById('chat-log').innerHTML += t;
-        document.documentElement.scrollTop = document.documentElement.scrollHeight;
     };
 
     chatSocket.onclose = function(e) {
