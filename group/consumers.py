@@ -37,4 +37,4 @@ class ChatConsumer(WebsocketConsumer):
         )
         chat.save()
         # Send message to room group
-        self.send(text_data=json.dumps(text_data))
+        self.send(text_data=json.dumps(data))
