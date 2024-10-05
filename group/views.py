@@ -6,8 +6,8 @@ from user.models import *
 def group(request, leader_id, village_id):
     if village_id == 0: #*run leader group
         if Leader.objects.filter(id=leader_id).exists():
-            group = Leader.objects.filter(id=leader_id).first()
-            check_leader_group(group.id)
+            leader = Leader.objects.filter(id=leader_id).first()
+            group = check_leader_group(leader.id)
             user = ''
             village = 0
             if request.session.has_key('user_mobile'):
@@ -29,8 +29,8 @@ def group(request, leader_id, village_id):
             return redirect('/')
     if leader_id == 0: #*run village group
         if Village.objects.filter(id=village_id).exists():
-            group = Village.objects.filter(id=village_id).first()
-            check_village_group(group.id)
+            village = Village.objects.filter(id=village_id).first()
+            group = check_village_group(village.id)
             mobile = request.session['user_mobile']
             user = User.objects.filter(mobile=mobile).first()
             check_user_selected_village_group(user.id, village_id)
@@ -50,20 +50,25 @@ def group(request, leader_id, village_id):
 
 def check_leader_group(leader_id):
     if Group.objects.filter(leader_id=leader_id).exists():
-        pass
+        group = Group.objects.filter(leader_id=leader_id).first()
+        return group
     else:
         Group(
             leader_id=leader_id
         ).save()
-        
+        group = Group.objects.filter(leader_id=leader_id).first()
+        return group
         
 def check_village_group(village_id):
     if Group.objects.filter(village_id=village_id).exists():
-        pass
+        group = Group.objects.filter(village_id=village_id).first()
+        return group
     else:
         Group(
             village_id=village_id
         ).save()
+        group = Group.objects.filter(village_id=village_id).first()
+        return group
         
 def check_user_selected_leader_group(user_id, leader_id):
     if Group.objects.filter(leader_id=leader_id).exists():
