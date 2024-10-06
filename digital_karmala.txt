@@ -5,7 +5,7 @@ git pull
 sudo systemctl daemon-reload
 service digital_karmala.gunicorn restart
 exit
- 
+
 _______________________________________
 
 
