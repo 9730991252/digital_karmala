@@ -252,6 +252,7 @@
                       <div class="flex">
                           <div class="user">${data.user_name} : </div>
                           <div class="village_name_in_chat">${data.user_village_name} : </div>
+                          <i class="fa-solid fa-eye" onclick="reload_page()"></i>
                       </div>
                       <div>${data.message}</div>
                       <div class="date">
@@ -348,6 +349,12 @@
         let scHeight = e.target.scrollHeight;
         textarea.style.height = `${scHeight}px`;
       });
+
+
+
+      function reload_page(){
+        location.reload()
+      }
 </script>
 
 {% endblock content %}
