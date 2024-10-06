@@ -3,7 +3,7 @@ from user.models import *
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.db import database_sync_to_async
-
+from django.template.loader import render_to_string
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -46,13 +46,17 @@ class ChatConsumer(WebsocketConsumer):
             )
     # Receive message from room group
     def chat_message(self, event):
-
         message = event["message"]
         user_name = event["user_name"]
         user_village_name = event["user_village_name"]
-        print(message)
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({"message":message,"user_name":user_name,"user_village_name":user_village_name}))
+        context={
+            'message':message,
+            'user_name':user_name,
+            'user_village_name':user_village_name
+        }
+        html = render_to_string("group/chat_message.html", context)
+        print(html)
+        self.send(text_data=html)
         
         
         

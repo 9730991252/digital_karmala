@@ -238,21 +238,9 @@
     );
 
     chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        console.log(data)
-        t = `
-        <div class="msg_box mb-3">
-            <div class="flex">
-                <div class="user"> ${data.user_name}: </div>
-                <div class="village_name_in_chat">${data.user_village_name} : </div>
-            </div>
-            <div>${data.message}</div>
-            <div class="date">
-                <div>${new Date().toLocaleString()}</div>
-            </div>
-        </div>
-        `
-        document.getElementById('chat-log').innerHTML += t;
+        console.log(e.data)
+        //const data = JSON.parse(e.html);
+        $("#chat-log").html(e.data);
     };
 
     chatSocket.onclose = function(e) {
