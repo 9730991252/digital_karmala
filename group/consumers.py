@@ -40,7 +40,6 @@ class ChatConsumer(SyncConsumer):
         self.send({
             'type':'websocket.send',
             'text':event['message'],
-            'text':event['user_name'],
         })
 
 
