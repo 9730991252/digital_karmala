@@ -240,25 +240,20 @@
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data)
-        console.log('receviced server',data)
-        input = document.getElementById('chat-message-input').value;
-        if( input.length > 0){}
-        else{
-            t = `
-                 <div class="msg_box mb-3" id='div'>
-                      <div class="flex">
-                          <div class="user">${data.user_name} : </div>
-                          <div class="village_name_in_chat">${data.user_village_name} : </div>
-                      </div>
-                      <div>${data.message}</div>
-                      <div class="date">
-                          <div>${new Date().toLocaleString()}</div>
-                      </div>
-                 </div>
-            `
-            document.getElementById('chat-log').innerHTML += t
-            location.reload()
-        }
+        t = `
+             <div class="msg_box mb-3" id='div'>
+                  <div class="flex">
+                      <div class="user">${data.user_name} : </div>
+                      <div class="village_name_in_chat">${data.user_village_name} : </div>
+                  </div>
+                  <div>${data.message}</div>
+                  <div class="date">
+                      <div>${new Date().toLocaleString()}</div>
+                  </div>
+             </div>
+        `
+        document.getElementById('chat-log').innerHTML += t
+        
     };
 
     chatSocket.onclose = function(e) {
