@@ -254,7 +254,11 @@
              </div>
         `
         document.getElementById('chat-log').innerHTML += t
-        location.reload()
+        input = document.getElementById('chat-message-input').value;
+        if( input.length > 0){}
+        else{
+            location.reload()
+        }
     };
 
     chatSocket.onclose = function(e) {
