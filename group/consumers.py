@@ -29,8 +29,6 @@ class ChatConsumer(SyncConsumer):
         data = json.loads(event['text'])
         message = data["message"]
         user_id=str(data['user_id'])
-        user_name=data['user_name']
-        user_village_name=data['user_village_name']
         group_id=str(self.room_name)
         chat=Chat_message(
             msg=message,

@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from group.models import *
+from .models import *
 # Create your views here.
 def sunil_login(request):
     if request.method == 'POST':
@@ -26,6 +27,34 @@ def sunil_home(request):
 def office_staff(request):
     if request.session.has_key('sunil_mobile'):
         context={}
+        if 'Add_staff'in request.POST:
+            name = request.POST.get('name')
+            mobile = request.POST.get('mobile')
+            pin = request.POST.get('pin')
+            if Office_staff.objects.filter(mobile=mobile).exists():
+                messages.warning(request,"Already Exists")  
+            else:
+                Office_staff(
+                    name=name,
+                    mobile=mobile,
+                    pin=pin,
+                ).save()
+                messages.success(request,"success")  
+            return redirect('office_staff')
+        if 'edit_staff'in request.POST:
+            id = request.POST.get('id')
+            name = request.POST.get('name')
+            mobile = request.POST.get('mobile')
+            pin = request.POST.get('pin')
+            office_staff = Office_staff.objects.get(id=id)
+            office_staff.name = name
+            office_staff.mobile = mobile
+            office_staff.pin = pin
+            office_staff.save()
+            return redirect('office_staff')
+        context={
+            'staff':Office_staff.objects.all()
+        }
         return render(request, 'sunil/office_staff.html', context)
     else:
         return redirect('sunil_login')
