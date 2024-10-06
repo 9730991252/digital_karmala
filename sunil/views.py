@@ -65,6 +65,7 @@ def leader(request):
         if 'Add_leader'in request.POST:
             name = request.POST.get('name')
             mobile = request.POST.get('mobile')
+            image = request.FILES.get("image")
             if Leader.objects.filter(mobile=mobile).exists():
                 messages.warning(request,"Already Exists")  
             else:
@@ -72,6 +73,7 @@ def leader(request):
                     name=name,
                     mobile=mobile,
                     status=1,
+                    image=image,
                 ).save()
                 messages.success(request,"success")  
             return redirect('leader')
@@ -79,9 +81,11 @@ def leader(request):
             id = request.POST.get('id')
             name = request.POST.get('name')
             mobile = request.POST.get('mobile')
+            image = request.FILES.get("image")
             leader = Leader.objects.get(id=id)
             leader.name = name
             leader.mobile = mobile
+            leader.image = image
             leader.save()
             return redirect('leader')
         ### end if

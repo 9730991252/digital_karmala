@@ -124,7 +124,25 @@
             margin-left: auto;
         }
     }
-
+    .profile{
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        margin-left: auto;
+        margin-top: -10px;
+    }
+    .image_footer{
+        position: fixed;
+        bottom: 65px;
+        left: 10px;
+        padding: 5px;
+        z-index: 12121;
+        cursor: pointer;
+    }
+    .send_img{
+            height: 50px;
+            width: 50px;
+        }
 </style>
 <!-------------------------------------------->
 <div class="group_name_box">
@@ -135,7 +153,7 @@
         <h6>Welcome - Guest</h6>
         {% endif %}
     </div>
-    <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b> <h6> मध्ये हार्दिक स्वागत</h6></div>
+    <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b>{% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}</div>
     {% if village == 0 and user_login == 1 %}
     <a class="a" href="/group/0/{{user.village_id}}/"><div class="village_name">{{user.village.name}} - गावाच्या गटासाठी येथे क्लिक करा </div></a>
     {% endif %}
@@ -154,6 +172,10 @@
                 border-top-right-radius: 0px;
                 border-top-left-radius: 10px;
             }
+            .chat_images{
+                width: 300px;
+                border-radius: 0;
+            }
     </style>
 
 <div class="container">
@@ -163,7 +185,7 @@
             <div class="user">{{c.user.name}} : </div>
             <div class="village_name_in_chat">{{c.user.village.name}} : </div>
         </div>
-        <div>{{c.msg}}</div>
+        <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg}}{% endif %}</div>
         <div class="date">
             <div>{{c.added_date}}</div>
         </div>
@@ -223,9 +245,38 @@
 
 
 <br><br><br>
-
 <!------------------------------------------------------------------>
 
+{% if user_login == 1 %}
+
+    <!-------------------------------------------------------------->
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">फोटो पाठवा </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <input type="hidden" name="group_id" value="{{group.id}}" >
+                    <input type="hidden" name="user_id" value="{{user.id}}" >
+                    <input type="file" class="form-control" name="image">
+                    <br>
+                    <button type="submit" name="send_image"  class="btn btn-transparent"><img  class="send_img" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    <!-------------------------------------------------------------->
+
+    <div class="image_footer"><i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-image"></i></div>
+{% endif %}
 <footer>
     {% if user_login == 1 %}
     <div class="input"><textarea placeholder="Message" id="chat-message-input" type="text" required></textarea></div>

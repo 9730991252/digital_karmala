@@ -12,5 +12,6 @@ def user_count_group(leader_id):
 @register.simple_tag
 def sms_count_group(leader_id):
     group = Group.objects.filter(leader_id=leader_id).first()
-    count = Chat_message.objects.filter(group_id=group.id).count()
-    return count
+    if group:
+        count = Chat_message.objects.filter(group_id=group.id).count()
+        return count

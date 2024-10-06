@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import *
 from user.views import *
 from user.models import *
+from channels.layers import get_channel_layer
+
 # Create your views here.
 def group(request, leader_id, village_id):
     if village_id == 0: #*run leader group
@@ -18,6 +20,22 @@ def group(request, leader_id, village_id):
                 user_login = 1
                 if user:
                     check_user_selected_leader_group(user.id, leader_id)
+                if 'send_image'in request.POST:
+                    image = request.FILES.get("image")
+                    group_id = request.POST.get("group_id")
+                    user_id = request.POST.get("user_id")
+                    Chat_images(
+                        user_id=user_id,
+                        image=image
+                    ).save()
+                    im = Chat_images.objects.filter(user_id=user_id).last()
+                    Chat_message(
+                        group_id=group_id,
+                        user_id=user_id,
+                        image_id=im.id,
+                    ).save()
+                    
+
             else:
                 user_login = 0
             if 'Add_User'in request.POST:
@@ -51,6 +69,13 @@ def group(request, leader_id, village_id):
         'chat':chat
     }
     return render(request, 'group/group.html', context)
+
+
+
+
+
+
+
 
 
 def check_leader_group(leader_id):

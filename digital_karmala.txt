@@ -33,6 +33,8 @@ pip install -U channels[daphne]
 pip install gunicorn
 pip install channels_redis
 
+pip install pillow
+
 ****************************
 
 apt install daphne

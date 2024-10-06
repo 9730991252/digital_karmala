@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 # Create your models here.
 class Leader(models.Model):
@@ -6,7 +7,14 @@ class Leader(models.Model):
     mobile = models.IntegerField()
     added_date = models.DateField(auto_now_add=True)
     status = models.IntegerField()
-    
+    image = models.ImageField(upload_to="leader_images",default="",null=True, blank=True)
+    def save(self, *args,**kwargs):
+        super().save(*args,**kwargs)
+        image = Image.open(self.image.path)
+        output_size = (300,300)
+        image.thumbnail(output_size)
+        image.save(self.image.path)
+        
 class Taluka(models.Model):
     name = models.CharField(max_length=100)
     status = models.IntegerField(default=1)
