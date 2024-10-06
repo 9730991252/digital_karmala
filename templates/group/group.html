@@ -141,6 +141,8 @@
 <!-------------------------------------------->
 <br><br><br><br><br><br>
 
+<div id="body_f">
+
 <!-------------------chat--------------------->
 
 <div class="container">
@@ -164,6 +166,7 @@
 
 <!-------------------chat end--------------------->
 
+</div>
 
 <!------------------------------------------------------------------>
 <div>
@@ -238,10 +241,15 @@
         + '/'
     );
 
+
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data)
         console.log('receviced server',data)
         input = document.getElementById('chat-message-input').value;
+
+        body = document.getElementById('#body_f')
+        body.onclick(alert('hi'))
+
         if( input.length == 0){
             location.reload()
         }
