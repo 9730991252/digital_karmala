@@ -5,7 +5,7 @@ from user.models import *
 # Create your views here.
 def office_login(request):
     if request.session.has_key('office_mobile'):
-        return redirect('office_dashboard')
+        return redirect('office_home')
     else:
         if request.method == "POST":
             number=request.POST ['number']
@@ -42,5 +42,31 @@ def office_home(request):
             'message':Chat_message.objects.all()
         }
         return render(request,'office/office_home.html', contaxt)
+    else:
+        return redirect('/office/')
+
+
+def user_status(request):
+    if request.session.has_key('office_mobile'):
+        mobile = request.session['office_mobile']
+        o = Office_staff.objects.filter(mobile=mobile).first()
+        if o:
+            if "user_active" in request.POST:
+                id=request.POST.get('id')
+                #print(id)
+                u=User.objects.get(id=id)
+                u.status='0'
+                u.save()
+            elif "user_deactive" in request.POST:
+                id=request.POST.get('id')
+                #print(id)
+                u=User.objects.get(id=id)
+                u.status='1'
+                u.save() 
+        contaxt={
+            'o':o,
+            'user':User.objects.all()
+        }
+        return render(request,'office/user_status.html', contaxt)
     else:
         return redirect('/office/')

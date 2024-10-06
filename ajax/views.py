@@ -7,7 +7,7 @@ from group.models import *
 def check_mobile_number(request):
     if request.method == 'GET':
         mobile_number = request.GET['mobile_number']
-        if User.objects.filter(mobile=mobile_number).exists():
+        if User.objects.filter(mobile=mobile_number, status=1).exists():
             request.session['user_mobile'] = mobile_number
             status = 1
         else:

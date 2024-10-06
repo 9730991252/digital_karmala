@@ -79,7 +79,7 @@ box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
             <div class="name"><name>{{l.name}}</name></div>
             <div class="flex">
                 <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group l.id %}<small>+</small></div> &nbsp;</div>
-                <div class="sms flex"><i class="fa-solid fa-comment"></i><div class="msg">1000<small>+</small></div></div>
+                <div class="sms flex"><i class="fa-solid fa-comment"></i><div class="msg">{% sms_count_group l.id %}<small>+</small></div></div>
             </div>
         </leader_box>
     </a>

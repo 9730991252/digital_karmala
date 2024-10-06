@@ -36,10 +36,6 @@
             width: fit-content;
             margin-top: 10px;
         }
-        .color_box1{
-            background-color: rgba(255, 149, 43, 0.5);
-            color: white;
-        }
         .color_box2{
             background-color: rgba(255, 255, 255, 0.7);
             color: rgb(0, 0, 0);
@@ -54,21 +50,19 @@
     <div>
         <p>welcome - {{o.name}}</p>
          
-        <a href="/office/user_status/" class="btn btn-info">User</a>
-        <br><br>
+        <a href="/office/office_home/" class="btn btn-info">home</a>
+        <br><br><br>
     </div>
 
 
-{% for m in message %}
+{% for u in user %}
     <div class="message_box">
-        <div class="group_name"><div>Group - {% if m.group.leader.name %}{{m.group.leader.name}}{% else %}{{m.group.village.name}}{% endif %}</div><div class="time"><small><p>{{m.added_date}}</p></small></div></div>
+        <div class="group_name">{{u.name}}</div>
         <div class="name_box">
-            <div class="color_box1">{{m.user.name}}</div>
-            <div class="color_box2">{{m.user.village.name}}</div>
-            <div class="color_box3">{{m.user.mobile}}</div>
+            <div class="color_box2">{{u.village.name}}</div>
+            <div class="color_box3">{{u.mobile}}</div>
         </div>
-        <div class="msg my-3"><div>{{m.msg}}</div></div>
-        <div class="button my-3"><form class="" method="POST">{% csrf_token %}{% if m.status == 1 %}<button class="btn btn-success" type="submit" name="show">Show<input type="hidden" name="id" value="{{m.id}}"></button>{% else %}<button class="btn btn-danger" type="submit" name="hide">Hide<input type="hidden" name="id" value="{{m.id}}"></button>{% endif %}</form></div>
+        <div class="button my-3"><form class="" method="POST">{% csrf_token %}{% if u.status == 1 %}<button class="btn btn-success" type="submit" name="user_active">Un block<input type="hidden" name="id" value="{{u.id}}"></button>{% else %}<button class="btn btn-danger" type="submit" name="user_deactive">Block<input type="hidden" name="id" value="{{u.id}}"></button>{% endif %}</form></div>
     </div>
     {% endfor %}
 </div>

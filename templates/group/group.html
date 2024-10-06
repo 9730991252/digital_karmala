@@ -122,6 +122,7 @@
             margin-left: auto;
         }
     }
+
 </style>
 <!-------------------------------------------->
 <div class="group_name_box">
@@ -144,10 +145,15 @@
 <div id="body_f">
 
 <!-------------------chat--------------------->
+    <style>
+            .self_msg{
+            background-color: rgb(211, 185, 249);
+        }
+    </style>
 
 <div class="container">
     {% for c in chat %}
-    <div class="msg_box mb-3">
+    <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% endif %}" >
         <div class="flex">
             <div class="user">{{c.user.name}} : </div>
             <div class="village_name_in_chat">{{c.user.village.name}} : </div>
@@ -159,6 +165,7 @@
     </div>
     {% endfor %}
 </div>
+
 
 <div class="container">
     <div id="chat-log"></div>
@@ -261,6 +268,9 @@
                  </div>
             `
             document.getElementById('chat-log').innerHTML += t
+            if (data.user_id == user_id){
+                document.getElementById('div').className += ' self_msg'; 
+            }
     };
 
     chatSocket.onclose = function(e) {

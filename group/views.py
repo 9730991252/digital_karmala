@@ -11,11 +11,13 @@ def group(request, leader_id, village_id):
             chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1)
             user = ''
             village = 0
+            
             if request.session.has_key('user_mobile'):
                 mobile = request.session['user_mobile']
-                user = User.objects.filter(mobile=mobile).first()
+                user = User.objects.filter(mobile=mobile, status=1).first()
                 user_login = 1
-                check_user_selected_leader_group(user.id, leader_id)
+                if user:
+                    check_user_selected_leader_group(user.id, leader_id)
             else:
                 user_login = 0
             if 'Add_User'in request.POST:

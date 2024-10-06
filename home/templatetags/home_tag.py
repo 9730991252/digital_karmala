@@ -8,3 +8,9 @@ register = template.Library()
 def user_count_group(leader_id):
     count = Select_user_group.objects.filter(group__leader_id=leader_id).count()
     return count
+
+@register.simple_tag
+def sms_count_group(leader_id):
+    group = Group.objects.filter(leader_id=leader_id).first()
+    count = Chat_message.objects.filter(group_id=group.id).count()
+    return count
