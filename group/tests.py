@@ -3,7 +3,7 @@ from user.models import *
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.db import database_sync_to_async
-
+from django.template.loader import render_to_string
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -23,6 +23,8 @@ class ChatConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         message = data["message"]
         user_id=str(data['user_id'])
+        user_name=data['user_name']
+        user_village_name=data['user_village_name']
         group_id=str(self.room_name)
         chat=Chat_message(
             msg=message,
@@ -37,24 +39,27 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name, 
             {
                 "type": "chat.message", 
-
-                "user_id": user_id,
-
+                
+                #"message":message,
+                
+                #"user_name":user_name,
+                
+                #"user_village_name":user_village_name,
                 }
             )
     # Receive message from room group
     def chat_message(self, event):
-
-        user_id = event["user_id"]
-        print(user_id)
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({"user_id":user_id}))
-        
-        
-        
-        
-        
-        
+       #message = event["message"]
+       #user_name = event["user_name"]
+       #user_village_name = event["user_village_name"]
+       #context={
+       #    'message':message,
+       #    'user_name':user_name,
+       #    'user_village_name':user_village_name
+       #}
+        # Leave room group
+        html = 'hi'
+        self.send(text_data=html)
 
     def disconnect(self, close_code):
         # Leave room group
