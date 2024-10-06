@@ -39,30 +39,27 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name, 
             {
                 "type": "chat.message", 
-                "message":message,
-                "user_name":user_name,
-                "user_village_name":user_village_name,
+                
+                #"message":message,
+                
+                #"user_name":user_name,
+                
+                #"user_village_name":user_village_name,
                 }
             )
     # Receive message from room group
     def chat_message(self, event):
-        message = event["message"]
-        user_name = event["user_name"]
-        user_village_name = event["user_village_name"]
-        context={
-            'message':message,
-            'user_name':user_name,
-            'user_village_name':user_village_name
-        }
-        html = render_to_string("group/chat_message.html", context)
-        print(html)
+       #message = event["message"]
+       #user_name = event["user_name"]
+       #user_village_name = event["user_village_name"]
+       #context={
+       #    'message':message,
+       #    'user_name':user_name,
+       #    'user_village_name':user_village_name
+       #}
+        # Leave room group
+        html = 'hi'
         self.send(text_data=html)
-        
-        
-        
-        
-        
-        
 
     def disconnect(self, close_code):
         # Leave room group
