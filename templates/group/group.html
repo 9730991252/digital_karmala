@@ -211,6 +211,7 @@
 
 
 <br><br><br>
+
 <!------------------------------------------------------------------>
 
 <footer>
@@ -246,12 +247,6 @@
         const data = JSON.parse(e.data)
         console.log('receviced server',data)
         input = document.getElementById('chat-message-input').value;
-
-        if( input.length == 0){
-            location.reload()
-        }
-        if( input.length > 0){}
-        else{
             t = `
                  <div class="msg_box mb-3" id='div'>
                       <div class="flex">
@@ -265,8 +260,6 @@
                  </div>
             `
             document.getElementById('chat-log').innerHTML += t
-            location.reload()
-        }
     };
 
     chatSocket.onclose = function(e) {
@@ -303,8 +296,8 @@
                 'user_village_name': user_village_name,
             }));
         }
-        document.documentElement.scrollTop = document.documentElement.scrollHeight;
         messageInputDom.value = '';
+        document.documentElement.scrollTop = document.documentElement.scrollHeight;
     }
 
 
