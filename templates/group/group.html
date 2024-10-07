@@ -183,9 +183,15 @@
             <h6>Welcome - Guest</h6>
             {% endif %}
         </div>
+        {% if village == 0 %}
         <div>
             <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group group.leader.id %}<small>+</small></div> &nbsp;</div>
         </div>
+        {% else %}
+        <div>
+            <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group group.village.id %}<small>+</small></div> &nbsp;</div>
+        </div>
+        {% endif %}
     </div>
     <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b>{% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}</div>
     {% if village == 0 and user_login == 1 %}
@@ -233,6 +239,7 @@
         <div class="flex">
             <div class="user">{{c.user.name}} : </div>
             <div class="village_name_in_chat">{{c.user.village.name}} : </div>
+            {% if c.user_id == user.id %}<div class="village_name_in_chat" style="margin-left: auto;"><form method="POST">{% csrf_token %}<input type="hidden" name="chat_id" value="{{c.id}}"><button type="submit" class="btn btn-transparent" name="remove_chat"><i class="fa-solid fa-xmark" style="color: red;font-size: 15px;"></i></button></form></div>{% endif %}
         </div>
         <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
         <div class="flex">
@@ -240,6 +247,7 @@
                 <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"><small><b>{% user_chat_like c.id user.id %}</b></small></div>
             </div>
             {% if c.msg == None %}
+            {% elif c.post_typing_status == 0 %}
             {% else %}
             <div class="whatsapp">
                 <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{c.msg }}👉 https://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
@@ -474,6 +482,7 @@
         else{
             chatSocket.send(JSON.stringify({
                 'message': message,
+                'status': 1,
                 'user_id': user_id,
                 'user_name': user_name,
                 'user_village_name': user_village_name,
@@ -498,6 +507,7 @@
             else{
                 chatSocket.send(JSON.stringify({
                     'message': message,
+                    'status': 0,
                     'user_id': user_id,
                     'user_name': user_name,
                     'user_village_name': user_village_name,

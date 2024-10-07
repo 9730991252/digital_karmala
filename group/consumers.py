@@ -29,9 +29,11 @@ class ChatConsumer(SyncConsumer):
         data = json.loads(event['text'])
         message = data["message"]
         user_id=str(data['user_id'])
+        status=str(data['status'])
         group_id=str(self.room_name)
         chat=Chat_message(
             msg=message,
+            post_typing_status=status,
             group_id=group_id,
             user_id=user_id,
         )

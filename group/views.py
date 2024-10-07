@@ -10,10 +10,9 @@ def group(request, leader_id, village_id):
         if Leader.objects.filter(id=leader_id).exists():
             leader = Leader.objects.filter(id=leader_id).first()
             group = check_leader_group(leader.id)
-            chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1)
+            chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1, self_remove_status=1)
             user = ''
-            village = 0
-            
+            village = 0       
             if request.session.has_key('user_mobile'):
                 mobile = request.session['user_mobile']
                 user = User.objects.filter(mobile=mobile, status=1).first()
@@ -35,6 +34,11 @@ def group(request, leader_id, village_id):
                         image_id=im.id,
                     ).save()
                     return redirect(f'/group/{leader_id}/0/')
+                if 'remove_chat'in request.POST:
+                    c=Chat_message.objects.filter(id=request.POST.get("chat_id")).first()
+                    c.self_remove_status=0
+                    c.save()
+                    return redirect(f'/group/{leader_id}/0/')
 
             else:
                 user_login = 0
@@ -55,7 +59,7 @@ def group(request, leader_id, village_id):
         if Village.objects.filter(id=village_id).exists():
             village = Village.objects.filter(id=village_id).first()
             group = check_village_group(village.id)
-            chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1)
+            chat = Chat_message.objects.filter(group_id=group.id, status=1, verify_status=1,  self_remove_status=1)
             mobile = request.session['user_mobile']
             user = User.objects.filter(mobile=mobile).first()
             check_user_selected_village_group(user.id, village_id)

@@ -32,7 +32,9 @@ class Chat_message(models.Model):
     date=models.DateField(auto_now_add=True,null=True)
     added_date=models.DateTimeField(auto_now_add=True,null=True)
     status = models.IntegerField(default=1)
-    verify_status = models.IntegerField(default=1)
+    verify_status = models.IntegerField(default=1, null=True)
+    self_remove_status = models.IntegerField(default=1, null=True)
+    post_typing_status = models.IntegerField(default=1, null=True)
 
 class Chat_like(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
