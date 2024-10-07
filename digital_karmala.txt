@@ -319,11 +319,3 @@ systemctl status daphne.service
 systemctl status on_boot.service
 
 
-
-
-
-
-
-
-
-
