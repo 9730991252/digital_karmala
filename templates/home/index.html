@@ -23,11 +23,10 @@
         justify-content: center;
     }
     .a{
-        text-decoration: none;
-        color: black;
+
         text-align: center;
         width: 150px;
-        height: 240px;
+        height: 260px;
         border: 1px solid rgba(0, 0, 0, 0.3);
         margin-left: auto;
         margin-right: auto;
@@ -35,6 +34,10 @@
         -webkit-box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
 -moz-box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
 box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
+        a{
+            text-decoration: none;
+            color: black; 
+        }
     }
     img{
         
@@ -76,19 +79,25 @@ box-shadow: 0px -5px 91px -5px rgba(191,191,191,0.63);
     प्रसन्न डिजिटल सादर करत आहे आपल्या साठी खास डिजिटल कट्टा ग्रुप......आता आपल्या नेत्यांसोबत संलग्न रहा 24 तास अन् थेट मांडा आपली मते......अन् जाणून घ्या आजचा दौरा,बैठक, मीटिंग,कार्यक्रम अन् बरच काही......ताबडतोब जॉईन करा अन् फॉलो करा आपल्या आवडत्या नेत्याला.......</p></div>
 <div class="container">
 {% for l in leader %}
-    <a class="a" href="/group/{{l.id}}/0/">
-        <leader_box>
-            <div class="img">{% if l.image.url != '' %}<img src="{{l.image.url}}" alt="">{% else %}<img src="{% static 'img/leader.png' %}" alt=" ">{% endif %}</div>
-            <div class="name"><name>{{l.name}}</name></div>
-            <div class="flex">
-                <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group l.id %}<small>+</small></div> &nbsp;</div>
-                <div class="sms flex"><i class="fa-solid fa-comment"></i><div class="msg">{% sms_count_group l.id %}<small>+</small></div></div>
-            </div>
-        </leader_box>
-    </a>
+    <div class="a">
+        <a  href="/group/{{l.id}}/0/">
+            <leader_box>
+                <div class="img">{% if l.image.url != '' %}<img src="{{l.image.url}}" alt="">{% else %}<img src="{% static 'img/leader.png' %}" alt=" ">{% endif %}</div>
+                <div class="name"><name>{{l.name}}</name></div>
+                <div class="flex">
+                    <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group l.id %}<small>+</small></div> &nbsp;</div>
+                    <div class="sms flex"><i class="fa-solid fa-comment"></i><div class="msg">{% sms_count_group l.id %}<small>+</small></div></div>
+                </div>
+            </leader_box>
+        </a>
+        <div class="whatsapp">
+            <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text=आपला नेता!! आपली चर्चा!! आपले मत!!
+                प्रसन्न डिजिटल सादर करत आहे आपल्या साठी खास डिजिटल कट्टा ग्रुप......आता आपल्या नेत्यांसोबत संलग्न रहा 24 तास अन् थेट मांडा आपली मते......अन् जाणून घ्या आजचा दौरा,बैठक, मीटिंग,कार्यक्रम अन् बरच काही......ताबडतोब जॉईन करा अन् फॉलो करा आपल्या आवडत्या नेत्याला.......  👉 https://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+        </div>
+    </div>
+    
 {% endfor %}
 </div>
-
 
 
 {% endblock content %}

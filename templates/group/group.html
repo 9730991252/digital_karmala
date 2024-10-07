@@ -236,7 +236,7 @@
             {% if c.msg == None %}
             {% else %}
             <div class="whatsapp">
-                <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{c.msg}} 👉 http://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+                <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{c.msg}} 👉 https://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
             </div>
             {% endif %}
             <div class="date">
@@ -339,9 +339,9 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <textarea id="summernote" name="editordata"></textarea>
-                      </div>
+                    </div>
                     <br>
-                    <img  class="send_img" data-bs-dismiss="modal" src="{% static 'img/message.png' %}" alt=" " id="post-message-submit">
+                    <img  class="send_img" data-bs-dismiss="modal" src="{% static 'img/message.png' %}" alt=" " id="post-message-submit" onclick="check_post_words_limit()" >
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -359,6 +359,7 @@
         <div><a href="/" style="color: black;"><i class="fa-solid fa-house"></i></a></div>
         <div><a href="" style="color: black;"><i class="fa-solid fa-rotate-right"></i></a></div>
         <div><i class="fa-solid fa-pen" data-bs-toggle="modal"  data-bs-target="#add_blog" ></i></div>
+        <div><strong id="word_limit"></strong></div>
     </div>
     <!---------------------------------------------------->
 
@@ -366,8 +367,8 @@
 {% endif %}
 <footer>
     {% if user_login == 1 %}
-    <div class="input"><textarea placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
-    <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></div>
+    <div class="input"><textarea oninput="check_words_limit()" placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
+    <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " ></div>
     {% elif user_login == 0 %}
     <div class="input"><input  placeholder="Enter Your Mobile Number" id="mobile"   type="number" required></div>
     <div class="img_box"><button  class="btn btn-primary btn-sm" onclick="check_mobile_number()">Login</button></div>
@@ -430,6 +431,26 @@
         }
     };
 
+
+    function check_words_limit(){
+        input = document.getElementById('chat-message-input').value;
+        l = 5000
+        f = input.length
+        document.getElementById('word_limit').innerHTML = ` ${f}/5,000`
+        if(f == 0 ){
+            document.getElementById('word_limit').innerHTML = ``
+        }
+        limit = l - f
+        if(limit < 1){
+            document.getElementById('chat-message-submit').style.display = 'none';
+        }
+        if(limit > 1){
+            document.getElementById('chat-message-submit').style.display = 'unset';
+        }
+    }
+
+
+
     /**document.querySelector('#chat-message-submit').onclick = function(e) {
         const messageInputDom = document.querySelector('#chat-message-input');
         const message = messageInputDom.value;
@@ -461,20 +482,23 @@
     document.querySelector('#post-message-submit').onclick = function(e) {
         const messageInputDom = document.querySelector('#summernote');
         const message = messageInputDom.value;
-        console.log(message)
-        if(message==''){
-            alert('कृपया संदेश लिहा ')
+        if (message.length > 50000){
+                alert('कृपया कमी  शब्द्ध टाका ')
         }
         else{
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'user_id': user_id,
-                'user_name': user_name,
-                'user_village_name': user_village_name,
-            }));
-        }
-        location.reload()
-        document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            if(message == ''){
+                alert('कृपया संदेश लिहा ')
+            }
+            else{
+                chatSocket.send(JSON.stringify({
+                    'message': message,
+                    'user_id': user_id,
+                    'user_name': user_name,
+                    'user_village_name': user_village_name,
+                }));
+            }
+            document.documentElement.scrollTop = document.documentElement.scrollHeight;
+        }  
     }
 
 
@@ -533,8 +557,8 @@
       }
 
       $(document).ready(function() {
-  $('#summernote').summernote();
-});
+            $('#summernote').summernote();
+        });
 
     function like_chat(chat_id){
         if(user_id == ''){
@@ -554,6 +578,8 @@
             })
         }
     }
+
+
 </script>
 
 {% endblock content %}

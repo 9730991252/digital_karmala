@@ -231,7 +231,9 @@ cd /etc/nginx/sites-available
 sudo nano digitalkarmala.com
 
 server {
+
     server_name 167.71.234.29 digitalkarmala.com www.digitalkarmala.com;
+    client_max_body_size 5000M;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     
