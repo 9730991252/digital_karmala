@@ -208,7 +208,7 @@
             }
             .chat_images{
                 width: 300px;
-                border-radius: 0;
+                border-radius: 5px;
             }
             .like{
                 font-size: 20px;
@@ -218,6 +218,12 @@
                 i{
                     color: black;
                 }
+            }
+            @media only screen and (max-width: 500px) {
+                .chat_images{
+                width: 90%;
+                border-radius: 5px;
+            }
             }
     </style>
 
@@ -236,7 +242,7 @@
             {% if c.msg == None %}
             {% else %}
             <div class="whatsapp">
-                <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{c.msg}} 👉 https://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+                <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{c.msg }}👉 https://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
             </div>
             {% endif %}
             <div class="date">
