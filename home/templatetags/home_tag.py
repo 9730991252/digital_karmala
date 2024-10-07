@@ -15,3 +15,21 @@ def sms_count_group(leader_id):
     if group:
         count = Chat_message.objects.filter(group_id=group.id).count()
         return count
+    
+    
+@register.inclusion_tag('inclusion_tag/group/user_chat_like.html')
+def user_chat_like(chat_id, user_id):
+    status = ''
+    if user_id:
+        if Chat_like.objects.filter(chat_id = chat_id , user_id = user_id, like_status = 1).exists():
+            status = 'yes'
+        if Chat_like.objects.filter(chat_id = chat_id , user_id = user_id, like_status = 0).exists():
+            status = 'no'
+    count = Chat_like.objects.filter(chat_id = chat_id, like_status = 1).count()
+    print(status)
+    return {
+        'count':count,
+        'status':status,
+        
+    }
+    

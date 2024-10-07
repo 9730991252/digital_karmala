@@ -3,6 +3,7 @@
 {% endblock head %}
 {% block content %}
 {% load static %}
+{% load home_tag %}
 <style>
     .group_name_box{
         font-size: larger;
@@ -10,7 +11,7 @@
         top: 0;
         background-color: rgb(241, 241, 241);
         width: 100%;
-        height: 50px;
+        height: 65px;
         left: 0;
         padding: 10px;
         display: grid;
@@ -131,27 +132,54 @@
         margin-left: auto;
         margin-top: -10px;
     }
-    .image_footer{
-        position: fixed;
-        bottom: 65px;
-        left: 10px;
-        padding: 5px;
-        z-index: 12121;
-        cursor: pointer;
-    }
+    .footer_menu{
+            position: fixed;
+            bottom: 65px;
+            left: 10px;
+            padding: 5px;
+            z-index: 12121;
+            cursor: pointer;
+            display: flex;
+            gap: 90px;
+            div{
+                height: fit-content;
+                width: fit-content;
+                background-color: white;
+                border-radius: 50%;
+                padding: 5px;
+            }
+        }
     .send_img{
             height: 50px;
             width: 50px;
         }
+    .members{
+        font-size: 10px;
+        font-weight: 700;
+        align-items: center;
+    }
+    .msg{
+        width: fit-content;
+        height: fit-content;
+        background-color: red;
+        color: white;
+        padding: 5px;
+        border-radius: 45%;
+    }
 </style>
 <!-------------------------------------------->
 <div class="group_name_box">
     <div class="user_name">
-        {% if user_login == 1 %}
-        <h6>Welcome - {{user.name}}</h6>
-        {% else %}    
-        <h6>Welcome - Guest</h6>
-        {% endif %}
+        <div>
+            {% if user_login == 1 %}
+            <h6>Welcome - {{user.name}}</h6>
+            {% else %}    
+            <h6>Welcome - Guest</h6>
+            {% endif %}
+        </div>
+        <div>
+            <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group group.leader.id %}<small>+</small></div> &nbsp;</div>
+        </div>
     </div>
     <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b>{% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}</div>
     {% if village == 0 and user_login == 1 %}
@@ -176,6 +204,9 @@
                 width: 300px;
                 border-radius: 0;
             }
+            .like{
+                font-size: 20px;
+            }
     </style>
 
 <div class="container">
@@ -185,7 +216,11 @@
             <div class="user">{{c.user.name}} : </div>
             <div class="village_name_in_chat">{{c.user.village.name}} : </div>
         </div>
-        <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg}}{% endif %}</div>
+        <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
+        <div class="like">
+            <!--div onclick="like_chat('{{c.id}}')"><i class="fa-regular fa-thumbs-up mt-3 "></i></!--div-->
+            <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"></i><small><b>{% user_chat_like c.id user.id %}</b></small></div>
+        </div>
         <div class="date">
             <div>{{c.added_date}}</div>
         </div>
@@ -273,9 +308,45 @@
               </div>
             </div>
           </div>
+          <!--------- add blog --------->
+          <div class="modal fade" id="add_blog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <textarea id="summernote" name="editordata"></textarea>
+                      </div>
+                    <br>
+                    <img  class="send_img" data-bs-dismiss="modal" src="{% static 'img/message.png' %}" alt=" " id="post-message-submit">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
     <!-------------------------------------------------------------->
+    <!---------------------------footer menu------------------------->
 
-    <div class="image_footer"><i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-image"></i></div>
+<br>
+
+
+    <div class="footer_menu">
+        
+        
+        <div><i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-image"></i></div>
+        <div><a href="/" style="color: black;"><i class="fa-solid fa-house"></i></a></div>
+        <div><a href="" style="color: black;"><i class="fa-solid fa-rotate-right"></i></a></div>
+        <div><i class="fa-solid fa-pen" data-bs-toggle="modal"  data-bs-target="#add_blog" ></i></div>
+        
+        
+    </div>
+    <!---------------------------------------------------->
+
+
 {% endif %}
 <footer>
     {% if user_login == 1 %}
@@ -288,6 +359,8 @@
 </footer>
 
 
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script>
     document.documentElement.scrollTop = document.documentElement.scrollHeight;
@@ -315,7 +388,7 @@
                       <div class="flex">
                           <div class="user">${data.user_name} : </div>
                           <div class="village_name_in_chat">${data.user_village_name} : </div>
-                          <i class="fa-solid fa-eye" onclick="reload_page()"></i>
+                          <i class="fa-solid fa-eye-slash" onclick="reload_page()"></i>
                       </div>
                       <div>${data.message}</div>
                       <div class="date">
@@ -364,6 +437,27 @@
             }));
         }
         messageInputDom.value = '';
+        document.documentElement.scrollTop = document.documentElement.scrollHeight;
+    }
+
+    /////////////////////////// |post-message| ///////////////////////////////////
+
+    document.querySelector('#post-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#summernote');
+        const message = messageInputDom.value;
+        console.log(message)
+        if(message==''){
+            alert('कृपया संदेश लिहा ')
+        }
+        else{
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'user_id': user_id,
+                'user_name': user_name,
+                'user_village_name': user_village_name,
+            }));
+        }
+        location.reload()
         document.documentElement.scrollTop = document.documentElement.scrollHeight;
     }
 
@@ -421,6 +515,29 @@
       function reload_page(){
         location.reload()
       }
+
+      $(document).ready(function() {
+  $('#summernote').summernote();
+});
+
+    function like_chat(chat_id){
+        if(user_id == ''){
+            alert('कृपया लॉगिन करा')
+        }
+        else{
+            $.ajax({
+                url: "{% url 'like_chat_count' %}",
+                method: "GET",
+                data:{
+                    chat_id:chat_id,
+                    user_id:user_id
+                      },
+                    success: function(res){
+                       document.getElementById('chat_like'+chat_id).innerHTML = res.t
+                    }
+            })
+        }
+    }
 </script>
 
 {% endblock content %}

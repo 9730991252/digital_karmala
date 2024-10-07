@@ -24,3 +24,34 @@ def check_taluka_village(request):
         }
         t = render_to_string('ajax/user/check_taluka_village.html', context)
     return JsonResponse({'village_list': t})
+
+def like_chat_count(request):
+    if request.method == 'GET':
+        chat_id = request.GET['chat_id']
+        user_id = request.GET['user_id']
+        if Chat_like.objects.filter(chat_id=chat_id, user_id=user_id, like_status=1).exists():
+            chat = Chat_like.objects.filter(chat_id=chat_id, user_id=user_id).first()
+            chat.like_status = 0
+            chat.save()
+        else:
+            if Chat_like.objects.filter(chat_id=chat_id, user_id=user_id, like_status=0).exists():
+                chat = Chat_like.objects.filter(chat_id=chat_id, user_id=user_id).first()
+                chat.like_status = 1
+                chat.save()
+            else:
+                Chat_like(
+                    user_id = user_id,
+                    chat_id = chat_id,
+                    like_status = 1
+                ).save()
+        if Chat_like.objects.filter(chat_id = chat_id , user_id = user_id, like_status = 1).exists():
+            status = 'yes'
+        if Chat_like.objects.filter(chat_id = chat_id , user_id = user_id, like_status = 0).exists():
+            status = 'no'
+        count = Chat_like.objects.filter(chat_id = chat_id, like_status = 1).count()
+        context={
+            'count':count,
+            'status':status,
+        }
+        t = render_to_string('inclusion_tag/group/user_chat_like.html', context)
+    return JsonResponse({'t': t})

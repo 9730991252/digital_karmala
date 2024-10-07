@@ -34,7 +34,7 @@ def group(request, leader_id, village_id):
                         user_id=user_id,
                         image_id=im.id,
                     ).save()
-                    
+                    return redirect(f'/group/{leader_id}/0/')
 
             else:
                 user_login = 0

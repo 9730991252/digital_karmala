@@ -34,4 +34,8 @@ class Chat_message(models.Model):
     status = models.IntegerField(default=1)
     verify_status = models.IntegerField(default=1)
 
-        
+class Chat_like(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat_message,on_delete=models.CASCADE)
+    like_status = models.IntegerField(default=0)
+    
