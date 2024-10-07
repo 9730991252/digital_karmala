@@ -65,6 +65,11 @@ def group(request, leader_id, village_id):
             check_user_selected_village_group(user.id, village_id)
             user_login = 1
             village = 1
+            if 'remove_chat'in request.POST:
+                c=Chat_message.objects.filter(id=request.POST.get("chat_id")).first()
+                c.self_remove_status=0
+                c.save()
+                return redirect(f'/group/0/{village_id}/')
         else:
             return redirect('/')
     context={
