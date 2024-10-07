@@ -193,7 +193,7 @@
         </div>
         {% endif %}
     </div>
-    <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b>{% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}</div>
+    <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b>{% if group.leader.image.url != '' and village == 0 %}<img src="{{group.leader.image.url}}" class="profile" alt="">{% elif village == 1  %}<img src="{% static 'img/village.jpg' %}" class="profile" alt=" ">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}</div>
     {% if village == 0 and user_login == 1 %}
     <a class="a" href="/group/0/{{user.village_id}}/"><div class="village_name">{{user.village.name}} - गावाच्या गटासाठी येथे क्लिक करा </div></a>
     {% endif %}
