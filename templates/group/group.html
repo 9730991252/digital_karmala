@@ -401,14 +401,14 @@
 
     const roomName = JSON.parse(document.getElementById('room-name').value);
 
-    const chatSocket = new WebSocket(
-        'wss://'
-        + window.location.host
-        + '/ws/chat/'
-        + roomName
-        + '/'
-    );
-
+    //const chatSocket = new WebSocket(
+    //    'wss://'
+    //    + window.location.host
+    //    + '/ws/chat/'
+    //    + roomName
+    //    + '/'
+    //);
+    const socket = new WebSocket('wss://digitalkarmala.com/ws/chat/1/0')
      
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data)
