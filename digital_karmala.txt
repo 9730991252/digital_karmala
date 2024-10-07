@@ -1,6 +1,6 @@
 167.71.234.29
 
-root
+
 cd digital_karmala
 git pull
 sudo systemctl daemon-reload
