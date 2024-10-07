@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'group',
     'ajax',
     'user',
-    'office'
+    'office',
+    'embed_video',
 ]
 
 MIDDLEWARE = [

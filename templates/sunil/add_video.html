@@ -1,0 +1,91 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/sunil/sunil_menu.html' %}
+
+
+<div class="container">
+    <form method="POST">{% csrf_token %}
+        <div class="mb-3">
+            <label for="Name" class="form-label">group</label>
+            <select name="group_id" class="form-select form-control" aria-label="Default select example" required>
+                <option value="" selected>select</option>
+                {% for g in group %}
+                    <option value="{{g.id}}">{{g.leader.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="d" class="form-label">code</label>
+            <input type="text" name="code" class="form-control" required placeholder="Code">
+        </div>
+        <div class="d-md-flex justify-content-md-end">
+            <button class="btn btn-primary me-md-2" type="submit" name="add_code">Add</button>
+          </div>
+    </form>
+</div>
+
+
+<hr>
+
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Group</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for c in code %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{c.group.leader.name}}</td>
+                    <td><form class="" method="POST">{% csrf_token %}{% if c.status == 1 %}<button class="btn btn-success" type="submit" name="active">Active<input type="hidden" name="id" value="{{c.id}}"></button>{% else %}<button class="btn btn-danger" type="submit" name="deactive">deactive<input type="hidden" name="id" value="{{c.id}}"></button>{% endif %}</form></td>
+                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{c.id}}">Edit</button></td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{c.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit to - {{c.group.leader.name}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST">{% csrf_token %}
+                                <input type="hidden" name="id" value="{{c.id}}">
+                                <div class="mb-3">
+                                    <label for="Name" class="form-label">group</label>
+                                    <select name="group_id" class="form-select form-control" aria-label="Default select example" required>
+                                        <option value="" selected>select</option>
+                                        <option value="{{c.group.id}}" selected>{{c.group.leader.name}}</option>
+                                        {% for g in group %}
+                                            <option value="{{g.id}}">{{g.leader.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="d" class="form-label">code</label>
+                                    <input type="text" value="{{c.code}}" name="code" class="form-control" required placeholder="Code">
+                                </div>
+                                <div class="d-md-flex justify-content-md-end">
+                                    <button class="btn btn-primary me-md-2" type="submit" name="edit_code">Edit</button>
+                                  </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock content %}

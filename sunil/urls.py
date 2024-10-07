@@ -8,4 +8,5 @@ urlpatterns = [
     path('leader/', views.leader, name='leader'),
     path('taluka/', views.taluka, name='taluka'),
     path('village/', views.village, name='village'),
+    path('add_video/', views.add_video, name='add_video'),
 ]

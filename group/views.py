@@ -66,7 +66,8 @@ def group(request, leader_id, village_id):
         'user':user,
         'taluka':Taluka.objects.filter(status=1),
         'village':village,
-        'chat':chat
+        'chat':chat,
+        'video':Group_video.objects.filter(group_id=group.id, status=1).first()
     }
     return render(request, 'group/group.html', context)
 

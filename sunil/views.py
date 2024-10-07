@@ -153,3 +153,46 @@ def village(request):
         return render(request, 'sunil/village.html', context)
     else:
         return redirect('sunil_login')
+
+def add_video(request):
+    if request.session.has_key('sunil_mobile'):
+        if "add_code"in request.POST:
+            group_id = request.POST.get('group_id')
+            code = request.POST.get('code')
+            if group_id:
+                Group_video(
+                    group_id=group_id,
+                    code=code
+                ).save()
+                return redirect('add_video')
+        
+        if "active" in request.POST:
+            id=request.POST.get('id')
+            #print(id)
+            c=Group_video.objects.get(id=id)
+            c.status='0'
+            c.save()
+        elif "deactive" in request.POST:
+            id=request.POST.get('id')
+            #print(id)
+            c=Group_video.objects.get(id=id)
+            c.status='1'
+            c.save() 
+        if "edit_code"in request.POST:
+            id = request.POST.get('id')
+            group_id = request.POST.get('group_id')
+            code = request.POST.get('code')
+            if group_id:
+                Group_video(
+                    id=id,
+                    group_id=group_id,
+                    code=code
+                ).save()
+                return redirect('add_video')
+        context={
+            'group':Group.objects.filter(status=1).order_by('-leader_id'),
+            'code':Group_video.objects.all(),
+        }
+        return render(request, 'sunil/add_video.html', context)
+    else:
+        return redirect('sunil_login')

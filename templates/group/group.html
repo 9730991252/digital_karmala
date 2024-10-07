@@ -4,6 +4,7 @@
 {% block content %}
 {% load static %}
 {% load home_tag %}
+{% load embed_video_tags %}
 <style>
     .group_name_box{
         font-size: larger;
@@ -140,7 +141,7 @@
             z-index: 12121;
             cursor: pointer;
             display: flex;
-            gap: 90px;
+            gap: 40px;
             div{
                 height: fit-content;
                 width: fit-content;
@@ -165,6 +166,11 @@
         color: white;
         padding: 5px;
         border-radius: 45%;
+    }
+    .video{
+        position: fixed;
+        top: 85px;
+        right: 0;
     }
 </style>
 <!-------------------------------------------->
@@ -227,6 +233,9 @@
     </div>
     {% endfor %}
 </div>
+<div class="video">
+    {% video video.code '160x90' %}
+</div>
 
 
 <div class="container">
@@ -273,9 +282,9 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 </div>
 
 
@@ -333,16 +342,11 @@
 
 <br>
 
-
     <div class="footer_menu">
-        
-        
         <div><i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-image"></i></div>
         <div><a href="/" style="color: black;"><i class="fa-solid fa-house"></i></a></div>
         <div><a href="" style="color: black;"><i class="fa-solid fa-rotate-right"></i></a></div>
         <div><i class="fa-solid fa-pen" data-bs-toggle="modal"  data-bs-target="#add_blog" ></i></div>
-        
-        
     </div>
     <!---------------------------------------------------->
 

@@ -32,7 +32,7 @@ pip install django-ckeditor==6.5.1
 pip install -U channels[daphne]
 pip install gunicorn
 pip install channels_redis
-
+pip install django-embed-video
 pip install pillow
 
 ****************************

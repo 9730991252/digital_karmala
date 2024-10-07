@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image
+from embed_video.fields import EmbedVideoField
 
 # Create your models here.
 class Leader(models.Model):
@@ -30,3 +31,7 @@ class Group(models.Model):
     status = models.IntegerField(default=1)
     added_date = models.DateField(auto_now_add=True)
     
+class Group_video(models.Model):
+    group = models.ForeignKey(Group,on_delete=models.PROTECT,null=True)
+    code = EmbedVideoField()
+    status = models.IntegerField(default=1)
