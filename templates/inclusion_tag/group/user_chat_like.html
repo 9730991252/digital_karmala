@@ -1,8 +1,10 @@
-<div class="flex">
-    {% if status == 'yes' %}
-        <i class="fa-solid fa-thumbs-up mt-3 "></i>
-    {% else %}
-        <i class="fa-regular fa-thumbs-up mt-3 "></i>
-    {% endif %}
+<div class="flex" style="gap: 5px;">
+    <div>
+        {% if status == 'yes' %}
+            <i class="fa-solid fa-thumbs-up mt-1 "></i>
+        {% else %}
+            <i class="fa-regular fa-thumbs-up mt-1 "></i>
+        {% endif %}
+    </div>
     <div><small><strong>{{count}}</strong></small></div>
 </div>

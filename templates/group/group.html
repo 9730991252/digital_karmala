@@ -170,7 +170,7 @@
     .video{
         position: fixed;
         top: 85px;
-        right: 0;
+        right: 10px;
     }
 </style>
 <!-------------------------------------------->
@@ -213,6 +213,12 @@
             .like{
                 font-size: 20px;
             }
+            .whatsapp{
+                cursor: pointer;
+                i{
+                    color: black;
+                }
+            }
     </style>
 
 <div class="container">
@@ -223,12 +229,19 @@
             <div class="village_name_in_chat">{{c.user.village.name}} : </div>
         </div>
         <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
-        <div class="like">
-            <!--div onclick="like_chat('{{c.id}}')"><i class="fa-regular fa-thumbs-up mt-3 "></i></!--div-->
-            <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"></i><small><b>{% user_chat_like c.id user.id %}</b></small></div>
-        </div>
-        <div class="date">
-            <div>{{c.added_date}}</div>
+        <div class="flex">
+            <div class="like">
+                <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"><small><b>{% user_chat_like c.id user.id %}</b></small></div>
+            </div>
+            {% if c.msg == None %}
+            {% else %}
+            <div class="whatsapp">
+                <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{c.msg}} 👉 http://www.digitalkarmala.com" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+            </div>
+            {% endif %}
+            <div class="date">
+                <div>{{c.added_date}}</div>
+            </div>
         </div>
     </div>
     {% endfor %}
@@ -258,7 +271,6 @@
             <div class="modal-body">
                 <form method="POST">{% csrf_token %}
                     <div class="mb-3">
-                      <label for="name" class="form-label">नाव</label>
                       <input type="text" class="form-control" name="name" placeholder="नाव" required>
                     </div>
                     <div class="mb-3">
@@ -268,9 +280,9 @@
                     <div class="mb-3 TAL">
                         {% for t in taluka %}
                         <div class="form_check">
-                            <div class="form-check">
+                            <div class="form-check" for="chek_box{{t.id}}">
                                 <input class="form-check-input" type="radio" id="chek_box{{t.id}}" onclick="chek_box('{{t.id}}')" name="taluka" >
-                                <label class="form-check-label" for="flexCheckChecked">{{t.name}}</label>
+                                <label class="form-check-label" for="chek_box{{t.id}}">{{t.name}}</label>
                             </div>
                         </div>
                         {% endfor %}

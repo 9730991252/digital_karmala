@@ -3,7 +3,7 @@ from .models import *
 from user.views import *
 from user.models import *
 from channels.layers import get_channel_layer
-
+from django.contrib import messages
 # Create your views here.
 def group(request, leader_id, village_id):
     if village_id == 0: #*run leader group
@@ -42,9 +42,12 @@ def group(request, leader_id, village_id):
                 name = request.POST.get('name')
                 mobile = request.POST.get('mobile')
                 village = request.POST.get('village')
-                add_user(name, mobile, village)
-                request.session['user_mobile'] = mobile
-                return redirect(f'/group/{leader_id}/0/')
+                if village == '':
+                    messages.success(request,"success") 
+                else:
+                    add_user(name, mobile, village)
+                    request.session['user_mobile'] = mobile
+                    return redirect(f'/group/{leader_id}/0/')
                 
         else:
             return redirect('/')
