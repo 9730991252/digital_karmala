@@ -25,7 +25,7 @@ class Chat_images(models.Model):
         image.save(self.image.path)
 
 class Chat_message(models.Model):
-    group=models.ForeignKey(Group,on_delete=models.CASCADE)
+    group=models.ForeignKey(Group,on_delete=models.CASCADE, null=True)
     image=models.ForeignKey(Chat_images,on_delete=models.CASCADE,null=True, blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     leader=models.ForeignKey(Leader,on_delete=models.CASCADE, null=True)
@@ -36,6 +36,7 @@ class Chat_message(models.Model):
     verify_status = models.IntegerField(default=1, null=True)
     self_remove_status = models.IntegerField(default=1, null=True)
     post_typing_status = models.IntegerField(default=1, null=True) #0 == post , 1 == msg
+    advertise = models.IntegerField(default=0, null=True) #0 == post , 1 == msg
 
 class Chat_like(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)

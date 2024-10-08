@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from group.models import *
+from user.models import Chat_message
 from .models import *
 # Create your views here.
 def sunil_login(request):
@@ -23,7 +24,6 @@ def sunil_home(request):
         return render(request, 'sunil/sunil_home.html', context)
     else:
         return redirect('sunil_login')
-    
 def office_staff(request):
     if request.session.has_key('sunil_mobile'):
         context={}
@@ -200,5 +200,35 @@ def add_video(request):
             'code':Group_video.objects.all(),
         }
         return render(request, 'sunil/add_video.html', context)
+    else:
+        return redirect('sunil_login')
+
+
+def advertise(request):
+    if request.session.has_key('sunil_mobile'):
+        if 'send'in request.POST:
+            message = request.POST.get('message')
+            Chat_message(
+                msg=message,
+                advertise = 1
+            ).save()
+            return redirect('advertise')
+        if 'edit'in request.POST:
+            id = request.POST.get('id')
+            message = request.POST.get('message')
+            msg = Chat_message.objects.filter(id=id).first()
+            msg.msg = message
+            msg.save()
+            return redirect('advertise')
+        if 'delete'in request.POST:
+            id = request.POST.get('id')
+            msg = Chat_message.objects.filter(id=id).first()
+            msg.self_remove_status = 0
+            msg.save()
+            return redirect('advertise')
+        context={
+            'msg':Chat_message.objects.filter(advertise=1, self_remove_status=1)
+        }
+        return render(request, 'sunil/advertise.html', context)
     else:
         return redirect('sunil_login')

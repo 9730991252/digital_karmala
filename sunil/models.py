@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Office_staff(models.Model):
@@ -6,3 +7,4 @@ class Office_staff(models.Model):
     mobile = models.IntegerField()
     pin = models.IntegerField()
     status = models.IntegerField(default=1)
+    

@@ -235,10 +235,21 @@
             border: 1px solid black;
             border-radius: 10px;
         }
+        .advertisement_msg{
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
         .chat_profile{
             border-radius: 50%;
             height: 50px;
             width: 50px;
+        }
+        .profile_advertisement{
+            height: 50px;
+            width: 70px;
         }
         .logo{
             margin-left: auto;
@@ -259,35 +270,55 @@
 
 <div class="container">
     {% for c in chat %}
-    <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% elif c.leader_id != None %} leader_msg {% endif %}" >
-        <div class="flex">
-            {% if c.leader_id == None %}
-                <div class="user">{{c.user.name}} : </div>
-                <div class="village_name_in_chat">{{c.user.village.name}} : </div>
-            {% else %}
-                <div class="user">{{c.leader.name}} : </div>
-                {% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="chat_profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}
-                <div class="logo"><img src="{% static 'img/official.jpg' %}" class="chat_logo" alt=""></div>
-            {% endif %}
-            {% if c.user_id == user.id %}<div class="village_name_in_chat" style="margin-left: auto;"><form method="POST">{% csrf_token %}<input type="hidden" name="chat_id" value="{{c.id}}"><button type="submit" class="btn btn-transparent" name="remove_chat"><i class="fa-solid fa-xmark" style="color: red;font-size: 15px;"></i></button></form></div>{% endif %}
-        </div>
-        <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
-        <div class="flex">
-            <div class="like">
-                <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"><small><b>{% user_chat_like c.id user.id %}</b></small></div>
+        {% if c.group_id == group.id %}
+            <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% elif c.leader_id != None %} leader_msg {% endif %}" >
+                <div class="flex">
+                    {% if c.leader_id == None %}
+                        <div class="user">{{c.user.name}} : </div>
+                        <div class="village_name_in_chat">{{c.user.village.name}} : </div>
+                    {% else %}
+                        <div class="user">{{c.leader.name}} : </div>
+                        {% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="chat_profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}
+                        <div class="logo"><img src="{% static 'img/official.jpg' %}" class="chat_logo" alt=""></div>
+                    {% endif %}
+                    {% if c.user_id == user.id %}<div class="village_name_in_chat" style="margin-left: auto;"><form method="POST">{% csrf_token %}<input type="hidden" name="chat_id" value="{{c.id}}"><button type="submit" class="btn btn-transparent" name="remove_chat"><i class="fa-solid fa-xmark" style="color: red;font-size: 15px;"></i></button></form></div>{% endif %}
+                </div>
+                <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
+                <div class="flex">
+                    <div class="like">
+                        <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"><small><b>{% user_chat_like c.id user.id %}</b></small></div>
+                    </div>
+                    {% if c.msg == None %}
+                    {% elif c.post_typing_status == 0 %}
+                    {% else %}
+                    <div class="whatsapp">
+                        <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{group.leader.name}} 👉 {{c.msg |slice:':200'}}... 👉 https://www.digitalkarmala.com{{request.path}}" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+                    </div>
+                    {% endif %}
+                    <div class="date">
+                        <div>{{c.added_date}}</div>
+                    </div>
+                </div>
             </div>
-            {% if c.msg == None %}
-            {% elif c.post_typing_status == 0 %}
-            {% else %}
-            <div class="whatsapp">
-                <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{group.leader.name}} 👉 {{c.msg |slice:':200'}}... 👉 https://www.digitalkarmala.com{{request.path}}" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+        {% endif %}
+        {% if c.group_id == None %}
+            <div class="msg_box mb-3  advertisement_msg" >
+                <div class="flex">
+                    <div class="user">Sunil kale : </div>
+                    <img src="{% static 'img/logo.jpg' %}" class="profile_advertisement" alt=" ">
+                    <img src="{% static 'img/Verified.png' %}" class="profile_advertisement" style="margin-left: auto;width: 50px;height: 30px;" alt=" ">
+                </div>
+                <div><strong>{{c.msg | safe}}</strong></div>
+                <div class="flex">
+                    <div class="like">
+                        <div id="chat_like{{c.id}}" onclick="like_chat('{{c.id}}')"><small><b>{% user_chat_like c.id user.id %}</b></small></div>
+                    </div>
+                    <div class="date">
+                        <div>{{c.added_date}}</div>
+                    </div>
+                </div>
             </div>
-            {% endif %}
-            <div class="date">
-                <div>{{c.added_date}}</div>
-            </div>
-        </div>
-    </div>
+        {% endif %}
     {% endfor %}
 </div>
 <div class="video">
@@ -432,9 +463,9 @@
     const roomName = JSON.parse(document.getElementById('room-name').value);
 
     const chatSocket = new WebSocket(
-        'wss://'
+        'ws://'
         + window.location.host
-        + ':8001'
+        //+ ':8001'
         + '/ws/chat/'
         + roomName
         + '/'

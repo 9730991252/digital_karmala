@@ -1,0 +1,92 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/navbar.html' %}
+{% include 'include/alert.html' %}
+{% load home_tag %}
+<style>
+    .chat_box{
+        border: 1px solid black;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+    .flex{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    .id{
+        display: flex;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom-right-radius: 10px;
+        padding: 10px;
+        width: fit-content;
+    }
+</style>
+
+<div class="container">
+    <div class="text-center">
+        <form method="POST">{% csrf_token %}
+            <div class="mb-3 mt-3">
+                <textarea name="message" id="summernote" placeholder="message" class="form-control" cols="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success" name="send">Send</button>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="container text-center mt-3">
+    {% for m in msg %}
+        <div class="chat_box">
+          <div class="id">{{forloop.revcounter}}</div>
+          <div>
+            <div><b>{{m.msg | safe}}</b></div>
+            <div>Like <b>{% chat_like_leader m.id %}</b></div>
+            <div class="flex mb-3">
+              <div><form method="POST">{% csrf_token %}<input type="hidden" name="id" value="{{m.id}}"><button type="submit" class="btn btn-danger" name="delete">delete</button></form></div>
+              <div><button type="submit" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal{{m.id}}">Edit</button></div>
+            </div>
+          </div>
+        </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal{{m.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{m.id}}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Message</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">{% csrf_token %}
+            <input type="hidden" value="{{m.id}}" name="id">
+            <div class="mb-3 mt-3">
+                <textarea name="message" id="summernote2" placeholder="message" class="form-control" cols="5">{{m.msg | safe}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" name="edit">Edit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+</div>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+<script>
+          $(document).ready(function() {
+            $('#summernote').summernote();
+        });
+          $(document).ready(function() {
+            $('#summernote2').summernote();
+        });
+</script>
+{% endblock content %}
