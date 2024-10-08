@@ -72,6 +72,7 @@ def leader(request):
             else:
                 Leader(
                     name=name,
+                    mobile=mobile,
                     pin=pin,
                     status=1,
                     image=image,
