@@ -356,7 +356,7 @@
                         {% for t in taluka %}
                         <div class="form_check">
                             <div class="form-check" for="chek_box{{t.id}}">
-                                <input class="form-check-input" type="radio" id="chek_box{{t.id}}" onclick="chek_box('{{t.id}}')" name="taluka" >
+                                <input required class="form-check-input" type="radio" id="chek_box{{t.id}}" onclick="chek_box('{{t.id}}')" name="taluka" >
                                 <label class="form-check-label" for="chek_box{{t.id}}">{{t.name}}</label>
                             </div>
                         </div>
