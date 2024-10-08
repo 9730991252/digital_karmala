@@ -5,6 +5,7 @@ from user.models import *
 # Create your views here.
 def index(request):
     #del request.session['user_mobile']
+    Select_user_group.objects.all().delete()
     User.objects.all().delete()
     context={
         'leader':Leader.objects.filter(status=1)
