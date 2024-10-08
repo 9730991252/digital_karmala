@@ -409,7 +409,7 @@
         + '/'
         + ':8001'
     );
-     
+    console.log(chatSocket)
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data)
         console.log('receviced server',data)
