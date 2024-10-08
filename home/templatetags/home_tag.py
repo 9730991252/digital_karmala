@@ -26,10 +26,14 @@ def user_chat_like(chat_id, user_id):
         if Chat_like.objects.filter(chat_id = chat_id , user_id = user_id, like_status = 0).exists():
             status = 'no'
     count = Chat_like.objects.filter(chat_id = chat_id, like_status = 1).count()
-    print(status)
     return {
         'count':count,
         'status':status,
         
     }
     
+@register.simple_tag
+def chat_like_leader(chat_id):
+    if chat_id:
+        like = Chat_like.objects.filter(chat_id=chat_id).count()
+        return like

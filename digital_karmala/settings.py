@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'user',
     'office',
     'embed_video',
+    'leader',
 ]
 
 MIDDLEWARE = [

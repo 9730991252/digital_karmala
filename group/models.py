@@ -6,6 +6,7 @@ from embed_video.fields import EmbedVideoField
 class Leader(models.Model):
     name = models.CharField(max_length=100)
     mobile = models.IntegerField()
+    pin = models.IntegerField(null=True)
     added_date = models.DateField(auto_now_add=True)
     status = models.IntegerField()
     image = models.ImageField(upload_to="leader_images",default="",null=True, blank=True)

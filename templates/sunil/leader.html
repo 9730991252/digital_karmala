@@ -18,6 +18,7 @@
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Mobile</th>
+        <th scope="col">Pin</th>
         <th scope="col">Status</th>
         <th scope="col">Edit</th>
       </tr>
@@ -28,6 +29,7 @@
           <td>{{forloop.counter}}</td>
           <td>{{l.name}}</td>
           <td>{{l.mobile}}</td>
+          <td>{{l.pin}}</td>
           <td>{{l.mobile}}</td>
           <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit{{l.id}}">Edit</button></td>
         </tr>
@@ -49,6 +51,10 @@
                   <div class="mb-3">
                     <label for="Mobile" class="form-label">Mobile</label>
                     <input type="number" value="{{l.mobile}}" class="form-control" id="Mobile" name="mobile" placeholder="Mobile" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="p" class="form-label">Pin</label>
+                    <input type="number" value="{{l.pin}}" class="form-control" id="p" name="pin" placeholder="Pin" required>
                   </div>
                   <div class="mb-3">
                     <label for="i" class="form-label">Image</label>
@@ -88,6 +94,10 @@
                 <div class="mb-3">
                   <label for="Mobile" class="form-label">Mobile</label>
                   <input type="number" class="form-control" id="Mobile" name="mobile" placeholder="Mobile" required>
+                </div>
+                <div class="mb-3">
+                  <label for="p" class="form-label">Pin</label>
+                  <input type="number" class="form-control" id="p" name="pin" placeholder="Pin" required>
                 </div>
                 <div class="mb-3">
                   <label for="i" class="form-label">Image</label>

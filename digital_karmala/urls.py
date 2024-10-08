@@ -25,4 +25,5 @@ urlpatterns = [
     path('group/', include('group.urls')),
     path('ajax/', include('ajax.urls')),
     path('office/', include('office.urls')),
+    path('leader/', include('leader.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,8 @@
 {% extends 'home/base.html' %}
 {% block head %}
+
+
+
 {% endblock head %}
 {% block content %}
 {% load static %}
@@ -134,13 +137,13 @@
         margin-top: -10px;
     }
     .footer_menu{
-            position: fixed;
-            bottom: 65px;
-            left: 10px;
-            padding: 5px;
-            z-index: 12121;
-            cursor: pointer;
-            display: flex;
+        position: fixed;
+        bottom: 65px;
+        left: 10px;
+        padding: 5px;
+        z-index: 12121;
+        cursor: pointer;
+        display: flex;
             gap: 40px;
             div{
                 height: fit-content;
@@ -150,15 +153,15 @@
                 padding: 5px;
             }
         }
-    .send_img{
+        .send_img{
             height: 50px;
             width: 50px;
         }
-    .members{
-        font-size: 10px;
-        font-weight: 700;
-        align-items: center;
-    }
+        .members{
+            font-size: 10px;
+            font-weight: 700;
+            align-items: center;
+        }
     .msg{
         width: fit-content;
         height: fit-content;
@@ -203,30 +206,51 @@
 <br><br><br><br><br><br>
 
 <div id="body_f">
-
-<!-------------------chat--------------------->
+    
+    <!-------------------chat--------------------->
     <style>
-            .self_msg{
-                background-color: rgb(211, 185, 249);
-                margin-left: auto;
-                border-top-right-radius: 0px;
-                border-top-left-radius: 10px;
+        .self_msg{
+            background-color: rgb(211, 185, 249);
+            margin-left: auto;
+            border-top-right-radius: 0px;
+            border-top-left-radius: 10px;
+        }
+        .chat_images{
+            width: 300px;
+            border-radius: 5px;
+        }
+        .like{
+            font-size: 20px;
+        }
+        .whatsapp{
+            cursor: pointer;
+            i{
+                color: black;
             }
+        }
+        .leader_msg{
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .chat_profile{
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+        }
+        .logo{
+            margin-left: auto;
+            width: fit-content;
+        }
+        .chat_logo{
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+        }
+        @media only screen and (max-width: 500px) {
             .chat_images{
-                width: 300px;
-                border-radius: 5px;
-            }
-            .like{
-                font-size: 20px;
-            }
-            .whatsapp{
-                cursor: pointer;
-                i{
-                    color: black;
-                }
-            }
-            @media only screen and (max-width: 500px) {
-                .chat_images{
                 width: 90%;
                 border-radius: 5px;
             }
@@ -235,10 +259,16 @@
 
 <div class="container">
     {% for c in chat %}
-    <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% endif %}" >
+    <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% elif c.leader_id != None %} leader_msg {% endif %}" >
         <div class="flex">
-            <div class="user">{{c.user.name}} : </div>
-            <div class="village_name_in_chat">{{c.user.village.name}} : </div>
+            {% if c.leader_id == None %}
+                <div class="user">{{c.user.name}} : </div>
+                <div class="village_name_in_chat">{{c.user.village.name}} : </div>
+            {% else %}
+                <div class="user">{{c.leader.name}} : </div>
+                {% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="chat_profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}
+                <div class="logo"><img src="{% static 'img/official.jpg' %}" class="chat_logo" alt=""></div>
+            {% endif %}
             {% if c.user_id == user.id %}<div class="village_name_in_chat" style="margin-left: auto;"><form method="POST">{% csrf_token %}<input type="hidden" name="chat_id" value="{{c.id}}"><button type="submit" class="btn btn-transparent" name="remove_chat"><i class="fa-solid fa-xmark" style="color: red;font-size: 15px;"></i></button></form></div>{% endif %}
         </div>
         <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
@@ -402,9 +432,9 @@
     const roomName = JSON.parse(document.getElementById('room-name').value);
 
     const chatSocket = new WebSocket(
-        'wss://'
+        'ws://'
         + window.location.host
-        + ':8001'
+        //+ ':8001'
         + '/ws/chat/'
         + roomName
         + '/'
