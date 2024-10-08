@@ -228,7 +228,7 @@
                 color: black;
             }
         }
-        .leader_msg{
+        #leader_msg{
             margin-left: auto;
             margin-right: auto;
             background-color: white;
@@ -271,7 +271,7 @@
 <div class="container">
     {% for c in chat %}
         {% if c.group_id == group.id %}
-            <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% elif c.leader_id != None %} leader_msg {% endif %}" >
+            <div class="msg_box mb-3 {% if c.user_id == user.id %} self_msg {% endif %}" {% if c.leader_id != None %} id="leader_msg" {% endif %}  >
                 <div class="flex">
                     {% if c.leader_id == None %}
                         <div class="user">{{c.user.name}} : </div>
@@ -281,7 +281,7 @@
                         {% if group.leader.image.url != '' %}<img src="{{group.leader.image.url}}" class="chat_profile" alt="">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}
                         <div class="logo"><img src="{% static 'img/official.jpg' %}" class="chat_logo" alt=""></div>
                     {% endif %}
-                    {% if c.user_id == user.id %}<div class="village_name_in_chat" style="margin-left: auto;"><form method="POST">{% csrf_token %}<input type="hidden" name="chat_id" value="{{c.id}}"><button type="submit" class="btn btn-transparent" name="remove_chat"><i class="fa-solid fa-xmark" style="color: red;font-size: 15px;"></i></button></form></div>{% endif %}
+                    {% if c.user_id == user.id and c.leader_id == None %}<div class="village_name_in_chat" style="margin-left: auto;"><form method="POST">{% csrf_token %}<input type="hidden" name="chat_id" value="{{c.id}}"><button type="submit" class="btn btn-transparent" name="remove_chat"><i class="fa-solid fa-xmark" style="color: red;font-size: 15px;"></i></button></form></div>{% endif %}
                 </div>
                 <div>{% if c.msg == None %}<img class="chat_images" src="{{c.image.image.url}}" alt="">{% else %}{{c.msg | safe}}{% endif %}</div>
                 <div class="flex">
@@ -445,10 +445,33 @@
     <div class="input"><textarea oninput="check_words_limit()" placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
     <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " ></div>
     {% elif user_login == 0 %}
-    <div class="input"><input  placeholder="Enter Your Mobile Number" id="mobile"   type="number" required></div>
-    <div class="img_box"><button  class="btn btn-primary btn-sm" onclick="check_mobile_number()">Login</button></div>
+    <div class="input"><textarea oninput="mobile_modal_lonch()" placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
+    <div class="img_box"><img onclick="mobile_modal_lonch()" src="{% static 'img/message.png' %}" alt=" " ></div>
     {% endif %}
 </footer>
+
+  <!-- Modal -->
+  <div class="modal fade" id="Check_Login_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="input"><input  placeholder="कृपया मोबाईल नंबर टाका " id="mobile"   type="number" required></div>
+            <div class="img_box"><button  class="btn btn-primary btn-sm mt-2" onclick="check_mobile_number()">Login</button></div>
+    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -655,7 +678,10 @@
             })
         }
     }
-
+//////////////////////////////////////////////
+function mobile_modal_lonch(){
+    $("#Check_Login_Modal").modal('show')
+}
 
 </script>
 
