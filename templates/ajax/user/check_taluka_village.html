@@ -1,7 +1,6 @@
 <div class="mb-3">
-    <label for="village" class="form-label">गाव निवडा</label>
     <select name="village" class="form-select" aria-label="Default select example" required>
-      <option value="" selected>शोधा</option>
+      <option value="" selected>गाव निवडा</option>
       {% for v in village %}
       <option value="{{v.id}}">{{v.name}}</option>
       {% endfor %}
