@@ -220,7 +220,8 @@ clear
 ****************************************
 
 
-
+sudo apt update
+sudo apt install nginx
 
 
 
@@ -233,7 +234,7 @@ sudo nano digitalkarmala.com
 
 server {
 
-    server_name 167.71.234.29 digitalkarmala.com www.digitalkarmala.com;
+    server_name 139.59.57.127 new.digitalkarmala.com www.new.digitalkarmala.com;
     client_max_body_size 5000M;
 
     location = /favicon.ico { access_log off; log_not_found off; }
@@ -296,7 +297,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/root/digital_karmala
-ExecStart=/root/digital_karmala/venv/bin/python /root/digital_karmala/venv/bin/daphne -e ssl:8001:privateKey=/etc/letsencrypt/live/digitalkarmala.com/privkey.pem:certKey=/etc/letsencrypt/live/digitalkarmala.com/fullchain.pem digital_karmala.asgi:application  
+ExecStart=/root/digital_karmala/venv/bin/python /root/digital_karmala/venv/bin/daphne -e ssl:8001:privateKey=/etc/letsencrypt/live/new.digitalkarmala.com/privkey.pem:certKey=/etc/letsencrypt/live/new.digitalkarmala.com/fullchain.pem digital_karmala.asgi:application  
 Restart=on-failure
 
 [Install]
@@ -305,6 +306,7 @@ WantedBy=multi-user.target
 -------------
 
 service digital_karmala.gunicorn restart
+sudo systemctl daemon-reload
 service daphne restart
 sudo systemctl daemon-reload
 
