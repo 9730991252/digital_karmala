@@ -260,6 +260,15 @@
             height: 30px;
             width: 30px;
         }
+        .live{
+            font-weight: 600;
+            letter-spacing: 2px;
+            background-color: red;
+            color: white;
+            border-radius: 1px;
+            padding: 0px 10px;
+            width: fit-content;
+        }
         @media only screen and (max-width: 500px) {
             .chat_images{
                 width: 90%;
@@ -321,8 +330,10 @@
         {% endif %}
     {% endfor %}
 </div>
+
 <div class="video">
     {% video video.code '160x90' %}
+    <div class="live">Live</div>
 </div>
 
 
