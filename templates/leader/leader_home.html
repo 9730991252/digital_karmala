@@ -1,11 +1,13 @@
 {% extends 'home/base.html' %}
 {% block head %}
+{% load static %}
 {% endblock head %}
 {% block content %}
 {% include 'include/navbar.html' %}
 {% include 'include/alert.html' %}
 {% load home_tag %}
 <style>
+
     .chat_box{
         border: 1px solid black;
         margin-bottom: 10px;
@@ -24,6 +26,22 @@
         padding: 10px;
         width: fit-content;
     }
+    .send_img{
+            height: 50px;
+            width: 50px;
+        }
+
+
+
+        @media only screen and (max-width: 500px) {
+            .image{
+                width: 90%;
+                border-radius: 5px;
+            }
+            .chat_box{
+                width: 400px;
+            }
+            }
 </style>
 
 <div class="container">
@@ -36,15 +54,49 @@
         </form>
     </div>
 </div>
+<!---------***************************************-->
+<div class="container">
+  <div><i data-bs-toggle="modal" data-bs-target="#Send_image" class="fa-solid fa-image"></i></div>
+</div>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="Send_image" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Send Image</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+          
+          
+          <input type="file" class="form-control" name="image">
+          <br>
+          <button type="submit" name="send_image"  class="btn btn-transparent"><img  class="send_img" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!---------***************************************-->
 
 <div class="container text-center mt-3">
     {% for m in msg %}
         <div class="chat_box">
           <div class="id">{{forloop.revcounter}}</div>
           <div>
+            {% if m.msg != None %}
             <div><b>{{m.msg}}</b></div>
+            {% else %}
+            <div><img class="image" src="{{ m.image.image.url }}" alt=""></div>
+            {% endif %}
             <div>Like <b>{% chat_like_leader m.id %}</b></div>
             <div class="flex mb-3">
               <div><form method="POST">{% csrf_token %}<input type="hidden" name="id" value="{{m.id}}"><button type="submit" class="btn btn-danger" name="delete">delete</button></form></div>

@@ -15,6 +15,7 @@ class Select_user_group(models.Model):
 
 class Chat_images(models.Model):
     user_id = models.IntegerField(null=True)
+    leader_id = models.IntegerField(null=True)
     image = models.ImageField(upload_to="chat_images",default="",null=True, blank=True) 
     def save(self, *args,**kwargs):
         super().save(*args,**kwargs)

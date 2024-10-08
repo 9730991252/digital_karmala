@@ -28,6 +28,19 @@ def leader_home(request):
         if l:
             group = Group.objects.filter(leader_id=l.id).first()
             if group:
+                if 'send_image'in request.POST:
+                    image = request.FILES.get("image")
+                    Chat_images(
+                        image=image,
+                        leader_id=l.id,
+                    ).save()                    
+                    im = Chat_images.objects.filter(leader_id=l.id).last()
+                    Chat_message(
+                        group_id=group.id,
+                        leader_id=l.id,
+                        image_id=im.id,
+                    ).save()                
+                    return redirect('leader_home')
                 if 'send'in request.POST:
                     message = request.POST.get('message')
                     Chat_message(
