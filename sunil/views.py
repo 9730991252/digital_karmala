@@ -154,7 +154,7 @@ def village(request):
             village.save()
             return redirect('village')
         context={
-            'village':Village.objects.all(),
+            'village':Village.objects.all().order_by('name'),
             'taluka':Taluka.objects.all()
         }
         return render(request, 'sunil/village.html', context)
