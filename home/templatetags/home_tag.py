@@ -5,9 +5,10 @@ from datetime import timedelta, date
 register = template.Library()
 
 @register.simple_tag
-def user_count_group(leader_id):
-    count = Select_user_group.objects.filter(group__leader_id=leader_id).count()
+def user_count_group(group_id):
+    count = Select_user_group.objects.filter(group_id=group_id).count()
     return count
+
 
 @register.simple_tag
 def sms_count_group(leader_id):
