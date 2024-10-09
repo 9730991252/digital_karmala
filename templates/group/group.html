@@ -86,10 +86,12 @@
         }
     }
     .img_box{
-        width: 20%;
+        width: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-left: auto;
+        margin-right: auto;
     }
     .TAL{
         display: flex;
@@ -450,7 +452,10 @@
         <div><strong id="word_limit"></strong></div>
     </div>
     <!---------------------------------------------------->
-
+{% else %}
+    <div class="footer_menu">
+        <div><a href="/" style="color: black;"><i class="fa-solid fa-house"></i></a></div>
+    </div>
 
 {% endif %}
 <footer>
