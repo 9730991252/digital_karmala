@@ -85,13 +85,22 @@
             width: 0;
         }
     }
-    .img_box{
+    .send_box{
         width: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-left: auto;
         margin-right: auto;
+        background-color: rgb(14, 203, 0);
+        border-radius: 50%;
+        font-weight: 900;
+        font-size: 30px;
+        color: rgb(255, 255, 255);
+        i{
+            height: 20px;
+            background-color: aqua;
+        }
     }
     .TAL{
         display: flex;
@@ -404,7 +413,7 @@
                     <input type="hidden" name="user_id" value="{{user.id}}" >
                     <input type="file" class="form-control" name="image">
                     <br>
-                    <button type="submit" name="send_image"  class="btn btn-transparent"><img  class="send_img" src="{% static 'img/message.png' %}" alt=" " id="chat_messsage_submit"></button>
+                    <button type="submit" name="send_image"  class="btn btn-transparent"><div class="send_box">></div></button>
                   </form>
                 </div>
                 <div class="modal-footer">
@@ -425,7 +434,7 @@
                         <textarea id="summernote" name="editordata"></textarea>
                     </div>
                     <br>
-                    <img  class="send_img" data-bs-dismiss="modal" src="{% static 'img/message.png' %}" alt=" " id="post-message-submit" onclick="check_post_words_limit()" >
+                    <div class="send_box" data-bs-dismiss="modal" id="post-message-submit" onclick="check_post_words_limit()">></div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -454,11 +463,11 @@
 {% endif %}
 <footer>
     {% if user_login == 1 %}
-    <div class="input"><textarea oninput="check_words_limit()" placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
-    <div class="img_box"><img id="chat-message-submit" src="{% static 'img/message.png' %}" alt=" " ></div>
+    <div class="input"><textarea oninput="check_words_limit()" placeholder=" संदेश लिहा" id="chat-message-input" type="text" required></textarea></div>
+    <div class="send_box" id="chat-message-submit">></div>
     {% elif user_login == 0 %}
-    <div class="input"><textarea oninput="mobile_modal_lonch()" placeholder="Message" id="chat-message-input" type="text" required></textarea></div>
-    <div class="img_box"><img onclick="mobile_modal_lonch()" src="{% static 'img/message.png' %}" alt=" " ></div>
+    <div class="input"><textarea oninput="mobile_modal_lonch()" placeholder=" संदेश लिहा" id="chat-message-input" type="text" required></textarea></div>
+    <div class="send_box" onclick="mobile_modal_lonch()">></div>
     {% endif %}
 </footer>
 
@@ -555,7 +564,7 @@
             document.getElementById('chat-message-submit').style.display = 'none';
         }
         if(limit > 1){
-            document.getElementById('chat-message-submit').style.display = 'unset';
+            document.getElementById('chat-message-submit').style.display = 'flex';
         }
     }
 
