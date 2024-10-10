@@ -65,3 +65,24 @@ def check_taluka_village_index(request):
         }
         t = render_to_string('ajax/home/check_taluka_village_index.html', context)
     return JsonResponse({'village_list': t})
+
+def show_hide_chat_office(request):
+    if request.method == 'GET':
+        id = request.GET['chat_id']
+        status = request.GET['status']
+        print(status)
+        if status == '1':
+            #print(id)
+            ac=Chat_message.objects.get(id=id)
+            ac.status= '0'
+            ac.save()
+        elif status == '0':
+            ac=Chat_message.objects.get(id=id)
+            ac.status = '1'
+            ac.save() 
+        m=Chat_message.objects.get(id=id)
+        context={
+            'm':m
+        }
+        t = render_to_string('ajax/office/show_hide_chat_office.html', context)
+    return JsonResponse({'t': t})

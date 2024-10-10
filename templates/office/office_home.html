@@ -72,8 +72,24 @@
         {% else %}
             <div class="msg my-3"><img src="{{m.image.image.url}}" alt=" "></div>
         {% endif %}
-        <div class="button my-3"><form class="" method="POST">{% csrf_token %}{% if m.status == 1 %}<button class="btn btn-success" type="submit" name="show">Show<input type="hidden" name="id" value="{{m.id}}"></button>{% else %}<button class="btn btn-danger" type="submit" name="hide">Hide<input type="hidden" name="id" value="{{m.id}}"></button>{% endif %}</form></div>
+        <div class="button my-3" id="show_hide_chat{{m.id}}">{% if m.status == 1 %}<button onclick="show_hide_chat_office('{{m.id}}','1')" class="btn btn-success" type="submit" name="show">Show<input type="hidden" name="id" value="{{m.id}}"></button>{% else %}<button onclick="show_hide_chat_office('{{m.id}}','0')" class="btn btn-danger" type="submit" name="hide">Hide<input type="hidden" name="id" value="{{m.id}}"></button>{% endif %}</div>
     </div>
     {% endfor %}
 </div>
+
+<script>
+    function show_hide_chat_office(chat_id,status){
+        $.ajax({
+                url: "{% url 'show_hide_chat_office' %}",
+                method: "GET",
+                data:{
+                    chat_id:chat_id,
+                    status:status
+                      },
+                    success: function(res){
+                        $("#show_hide_chat" + chat_id).html(res.t)
+                    }
+            })
+    }
+</script>
 {% endblock content %}

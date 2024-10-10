@@ -1,1 +1,6 @@
 https://github.com/mitchtabian/HOWTO-django-channels-daphne?tab=readme-ov-file#Deploying-Django-Channels-with-Daphne-&-Systemd
+
+
+<iframe frameborder="0" src="https://www.youtube.com/embed/LEfqDRphyMc?feature=share" width="240" height="360" class="note-video-clip"></iframe>
+
+<iframe src="https://www.youtube.com" frameborder="0"></iframe>

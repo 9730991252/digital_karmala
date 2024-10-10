@@ -65,7 +65,7 @@ def user_status(request):
                 u.save() 
         contaxt={
             'o':o,
-            'user':User.objects.all()
+            'user':User.objects.all().order_by('-id')
         }
         return render(request,'office/user_status.html', contaxt)
     else:
