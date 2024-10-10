@@ -1,4 +1,31 @@
-<div class="dropdown">
+<style>
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  .vilage_main_box{
+    display: grid;
+    grid-template-columns:repeat(auto-fit, 150px);
+    gap: 10px;
+  }
+  .vilage_main{
+    width: 150px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+</style>
+<div class="vilage_main_box">
+  {% for v in village %}
+  <a href="/group/0/{{v.id}}/">
+    <div class="vilage_main">
+      <b>{{v.name}}</b>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<!--div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     गाव निवडा 
   </a>
@@ -7,4 +34,4 @@
     <li><a class="dropdown-item" href="/group/0/{{v.id}}/">{{v.name}}</a></li>
     {% endfor %}
   </div>
-</div>
+</-div-->
