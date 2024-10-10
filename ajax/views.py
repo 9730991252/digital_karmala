@@ -55,3 +55,13 @@ def like_chat_count(request):
         }
         t = render_to_string('inclusion_tag/group/user_chat_like.html', context)
     return JsonResponse({'t': t})
+
+def check_taluka_village_index(request):
+    if request.method == 'GET':
+        id = request.GET['id']
+        village = Village.objects.filter(taluka_id=id).order_by('name')
+        context={
+            'village':village
+        }
+        t = render_to_string('ajax/home/check_taluka_village_index.html', context)
+    return JsonResponse({'village_list': t})

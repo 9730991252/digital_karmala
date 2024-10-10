@@ -1,0 +1,10 @@
+<div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    गाव निवडा 
+  </a>
+  <div class="dropdown-menu">
+    {% for v in village %}
+    <li><a class="dropdown-item" href="/group/0/{{v.id}}/">{{v.name}}</a></li>
+    {% endfor %}
+  </div>
+</div>
