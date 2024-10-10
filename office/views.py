@@ -39,7 +39,7 @@ def office_home(request):
                 ac.save() 
         contaxt={
             'o':o,
-            'message':Chat_message.objects.all()
+            'message':Chat_message.objects.all().order_by('-id')
         }
         return render(request,'office/office_home.html', contaxt)
     else:

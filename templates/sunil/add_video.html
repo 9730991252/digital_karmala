@@ -12,7 +12,7 @@
             <select name="group_id" class="form-select form-control" aria-label="Default select example" required>
                 <option value="" selected>select</option>
                 {% for g in group %}
-                    <option value="{{g.id}}">{{g.leader.name}}</option>
+                    <option value="{{g.id}}">{{g.leader.name}}{{g.id}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -65,7 +65,7 @@
                                         <option value="" selected>select</option>
                                         <option value="{{c.group.id}}" selected>{{c.group.leader.name}}</option>
                                         {% for g in group %}
-                                            <option value="{{g.id}}">{{g.leader.name}}</option>
+                                            <option value="{{g.id}}">{{g.leader.name}}{{g.id}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
