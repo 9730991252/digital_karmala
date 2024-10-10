@@ -6,6 +6,8 @@ from channels.layers import get_channel_layer
 from django.contrib import messages
 # Create your views here.
 def group(request, leader_id, village_id):
+    user_login = ''
+    user = ''
     if village_id == 0: #*run leader group
         if Leader.objects.filter(id=leader_id).exists():
             leader = Leader.objects.filter(id=leader_id).first()
@@ -60,16 +62,19 @@ def group(request, leader_id, village_id):
             village = Village.objects.filter(id=village_id).first()
             group = check_village_group(village.id)
             chat = Chat_message.objects.filter(status=1, verify_status=1,  self_remove_status=1)
-            mobile = request.session['user_mobile']
-            user = User.objects.filter(mobile=mobile).first()
-            check_user_selected_village_group(user.id, village_id)
-            user_login = 1
-            village = 1
-            if 'remove_chat'in request.POST:
-                c=Chat_message.objects.filter(id=request.POST.get("chat_id")).first()
-                c.self_remove_status=0
-                c.save()
-                return redirect(f'/group/0/{village_id}/')
+            if request.session.has_key('user_mobile'):
+                mobile = request.session['user_mobile']
+                user = User.objects.filter(mobile=mobile).first()
+                check_user_selected_village_group(user.id, village_id)
+                user_login = 1
+                village = 1
+                if 'remove_chat'in request.POST:
+                    c=Chat_message.objects.filter(id=request.POST.get("chat_id")).first()
+                    c.self_remove_status=0
+                    c.save()
+                    return redirect(f'/group/0/{village_id}/')
+            else:
+                user_login = 0
         else:
             return redirect('/')
     context={
