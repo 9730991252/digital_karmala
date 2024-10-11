@@ -239,6 +239,8 @@
             background-color: white;
             border: 1px solid black;
             border-radius: 10px;
+            width: 98%;
+            
         }
         .advertisement_msg{
             margin-left: auto;
@@ -246,6 +248,23 @@
             background-color: white;
             border: 1px solid black;
             border-radius: 10px;
+            border-radius: 10px;
+            padding: 10px;
+            width: 98%;
+            .user{
+                font-weight: 700;
+                font-size: 12px;
+            }
+            .village_name_in_chat{
+                font-weight: 700;
+                font-size: 10px;
+            }
+            .date{
+                font-size: 10px;
+                font-weight: 700;
+                width: fit-content;
+                margin-left: auto;
+            }
         }
         .chat_profile{
             border-radius: 50%;
@@ -318,7 +337,7 @@
             </div>
         {% endif %}
         {% if c.group_id == None %}
-            <div class="msg_box mb-3  advertisement_msg" >
+            <div class="mb-3  advertisement_msg" >
                 <div class="flex">
                     <div class="user">Sunil kale : </div>
                     <img src="{% static 'img/logo.jpg' %}" class="profile_advertisement" alt=" ">
