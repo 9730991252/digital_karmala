@@ -327,7 +327,7 @@
                     {% elif c.post_typing_status == 0 %}
                     {% else %}
                     <div class="whatsapp">
-                        <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{group.leader.name}} 👉 {{c.msg |slice:':200'}}... 👉 https://www.digitalkarmala.com{{request.path}}" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
+                        <div>&nbsp;&nbsp;&nbsp;<a href="https://api.whatsapp.com/send?phone=&text={{group.leader.name}} 👉 {{c.msg |slice:':100'}}... 👉 https://www.digitalkarmala.com{{request.path}}" target="_blank"><i class="fa-solid fa-share mt-2"></i></a></div>
                     </div>
                     {% endif %}
                     <div class="date">
