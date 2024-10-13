@@ -10,6 +10,28 @@ def user_count_group(group_id):
     return count
 
 @register.simple_tag
+def leader_page_count(leader_id):
+    g = Group.objects.filter(leader_id=leader_id).first()
+    if g:
+        p = Page_count.objects.filter(group_id=g.id).first()
+    if p == None:
+        p = 0
+        return p
+    else:
+        return p.count
+    
+@register.simple_tag
+def group_page_count(group_id):
+    if group_id:
+        p = Page_count.objects.filter(group_id=group_id).first()
+    if p == None:
+        p = 0
+        return p
+    else:
+        return p.count
+
+
+@register.simple_tag
 def user_count_group_home(id):
     count = Select_user_group.objects.filter(group__leader_id=id).count()
     return count

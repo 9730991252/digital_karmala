@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - DigitalKarmala Chat App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        KARMALA {
+            color: rgb(0, 85, 255);
+        }
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(135deg, #4a90e2, #3a70b2);
+    padding: 100px 20px;
+    text-align: center;
+    color: white;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+}
+
+.header-content h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.header-content p {
+    font-size: 1.3em;
+    opacity: 0.9;
+}
+
+/* Features Section */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    text-align: center;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+    color: #4a90e2;
+}
+
+.feature h2 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+button.learn-more {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button.learn-more:hover {
+    background-color: #3a70b2;
+}
+
+/* Hidden content section */
+.hidden-content {
+    display: none;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #666;
+    text-align: left;
+}
+
+.feature.active .hidden-content {
+    display: block;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+footer p {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+    </style>
+</head>
+<body>
+
+    {% load static %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'img/logo.jpg' %}" style="height: 40px;" alt="">
+                <b>DIGITAL <KARMALA>KARMALA</KARMALA></b>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="leader/">Leader login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/features/">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about_us/">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact_us/">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="office/">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <h1>Elevate Your Conversations / संवाद वाढवा</h1>
+            <p>Explore the cutting-edge features designed to transform your messaging experience. / आपल्या संदेशिंग अनुभवाचे रूपांतर करण्यासाठी डिझाइन केलेले अत्याधुनिक वैशिष्ट्ये शोधा.</p>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="feature">
+            <div class="icon">💬</div>
+            <h2>Real-Time Messaging / तात्काळ संदेश</h2>
+            <p>Instant messaging with smooth and responsive delivery, perfect for every conversation. / प्रत्येक संवादासाठी योग्य, तात्काळ संदेश आणि सुलभ वितरण.</p>
+            <button class="learn-more">Learn More / अधिक जाणून घ्या</button>
+            <div class="hidden-content">
+                <p>With real-time syncing, you can see typing indicators, read receipts, and immediate delivery of messages across devices. / तात्काळ समन्वयामुळे, तुम्ही टाईपिंग इंडिकेटर्स, वाचन प्राप्ती आणि डिव्हाइसवर संदेश त्वरित वितरित होणे पाहू शकता.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="icon">🔐</div>
+            <h2>End-to-End Encryption / अंत-अंतापर्यंत एनक्रिप्शन</h2>
+            <p>All messages are private, secure, and fully encrypted from start to finish. / सर्व संदेश खासगी, सुरक्षित आणि पूर्णपणे सुरक्षीत आहेत.</p>
+            <button class="learn-more">Learn More / अधिक जाणून घ्या</button>
+            <div class="hidden-content">
+                <p>We prioritize your privacy. Encryption ensures no one else can read your conversations, even us! / आम्ही तुमच्या गोपनीयतेला प्राधान्य देतो. एनक्रिप्शन याची खात्री करते की दुसरे कोणतेही व्यक्ती तुमच्या संवादांवर वाचन करू शकत नाहीत, अगदी आमच्याद्वारेही!</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="icon">📂</div>
+            <h2>File & Media Sharing / फाईल आणि मीडिया शेअरिंग</h2>
+            <p>Share photos, videos, and files effortlessly with your contacts in real-time. / आपल्या संपर्कांशी त्वरित फोटो, व्हिडिओ आणि फाईल्स सहजपणे शेअर करा.</p>
+            <button class="learn-more">Learn More / अधिक जाणून घ्या</button>
+            <div class="hidden-content">
+                <p>Send large files securely, without any storage limitations, and experience seamless sharing of high-quality media. / मोठ्या फाईल्स सुरक्षितपणे पाठवा, कोणत्याही संग्रहणाच्या मर्यादांशिवाय, आणि उच्च-गुणवत्तेच्या मीडियाचे सहज शेअरिंग अनुभवाः.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="icon">👥</div>
+            <h2>Group Chats & Channels / गट चाट्स आणि चॅनेल</h2>
+            <p>Create dynamic groups for teams, friends, and communities with ease. / संघ, मित्र, आणि समुदायांसाठी गतिशील गट सहज तयार करा.</p>
+            <button class="learn-more">Learn More / अधिक जाणून घ्या</button>
+            <div class="hidden-content">
+                <p>Manage group members, customize chat roles, and moderate conversations to keep everything organized. / गटाचे सदस्य व्यवस्थापित करा, चाट रोल कस्टमाइझ करा, आणि संवादांचे आयोजन करण्यासाठी समन्वय साधा.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 DigitalKarmala Chat App. All Rights Reserved. / सर्व अधिकार राखीव. डिजिटलकर्माला चॅट अॅप. 2024</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Learn More button toggles content
+document.querySelectorAll('.learn-more').forEach(button => {
+    button.addEventListener('click', function() {
+        const feature = this.closest('.feature');
+        feature.classList.toggle('active');
+
+        if (feature.classList.contains('active')) {
+            this.textContent = 'Show Less / कमी दर्शवा';
+        } else {
+            this.textContent = 'Learn More / अधिक जाणून घ्या';
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

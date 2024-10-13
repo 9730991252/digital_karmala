@@ -1,0 +1,92 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'include/navbar.html' %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap');
+
+    .section {
+        margin-bottom: 1rem;
+    }
+
+    .titel_tag {
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 2rem;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        color: rgb(197, 32, 49);
+        margin-left: auto;
+    }
+
+    .section_heading {
+        margin: 3rem 0 4rem;
+        text-align: center;
+    }
+
+    .Co-founder {
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    .Co-founder p {
+        font-size: 17px;
+    }
+
+    .titel_name {
+        font-size: 34px;
+        font-weight: 700;
+    }
+
+    .img_sunil {
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        height: 200px;
+        width: 200px;
+        object-fit: cover; /* Maintain aspect ratio */
+    }
+
+    .founder {
+        font-weight: 700;
+        font-size: 34px;
+        text-align: center;
+    }
+
+    @media only screen and (max-width: 450px) {
+        .titel_name {
+            font-size: 25px;
+            font-weight: 500;
+        }
+
+        .founder {
+            font-size: 25px;
+        }
+    }
+</style>
+
+<div class="section">
+    <div class="container">
+        <div class="content-section">
+            <div class="title">
+                <div class="section_heading">
+                    <span class="titel_tag">About Us</span>
+                    <h1 class="titel_name">
+                        Hey! We’re <a href="/" style="text-decoration: none; color: black;">DigitalKarmala.com</a> and we help with Social Media Marketing
+                    </h1><br><br>
+                    <h3>We provide any kind of software</h3><br>
+                    <h5>This is the <b>First</b> and <b>Most Important</b> software for <b>All Political Groups' Information at One Place</b></h5>
+                </div>
+                <div class="founder">
+                    <p>People Behind <a href="/" style="text-decoration: none; color: rgb(29, 29, 29);">Digitalkarmala.com</a></p>
+                </div>
+                <div class="Co-founder">
+                    <img class="img_sunil" src="{% static 'img/hi.jpeg' %}" alt="Mr. Sunil Kale - Founder & CEO"><br>
+                    <h1>Mr. Sunil Kale</h1>
+                    <p>Founder & CEO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

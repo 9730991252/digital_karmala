@@ -36,3 +36,7 @@ class Group_video(models.Model):
     group = models.ForeignKey(Group,on_delete=models.PROTECT,null=True)
     code = EmbedVideoField()
     status = models.IntegerField(default=1)
+    
+class Page_count(models.Model):
+    group = models.ForeignKey(Group,on_delete=models.PROTECT,null=True)
+    count = models.IntegerField()

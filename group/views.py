@@ -99,24 +99,40 @@ def group(request, leader_id, village_id):
 def check_leader_group(leader_id):
     if Group.objects.filter(leader_id=leader_id).exists():
         group = Group.objects.filter(leader_id=leader_id).first()
+        page_count(group.id)
         return group
     else:
         Group(
             leader_id=leader_id
         ).save()
         group = Group.objects.filter(leader_id=leader_id).first()
+        page_count(group.id)
         return group
         
 def check_village_group(village_id):
     if Group.objects.filter(village_id=village_id).exists():
         group = Group.objects.filter(village_id=village_id).first()
+        page_count(group.id)
         return group
     else:
         Group(
             village_id=village_id
         ).save()
         group = Group.objects.filter(village_id=village_id).first()
+        page_count(group.id)
         return group
+        
+def page_count(group_id):
+    if group_id:
+        if Page_count.objects.filter(group_id=group_id).exists():
+            p = Page_count.objects.filter(group_id=group_id).first()
+            p.count += 500
+            p.save()
+        else:
+            Page_count(
+                group_id=group_id,
+                count=1
+            ).save()
         
 def check_user_selected_leader_group(user_id, leader_id):
     if Group.objects.filter(leader_id=leader_id).exists():

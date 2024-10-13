@@ -169,9 +169,12 @@
             width: 50px;
         }
         .members{
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
             align-items: center;
+            i{
+                font-size: 17px;
+            }
         }
     .msg{
         width: fit-content;
@@ -186,6 +189,11 @@
         top: 100px;
         right: 10px;
     }
+    .down{
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+    }
 </style>
 <!-------------------------------------------->
 <div class="group_name_box">
@@ -198,7 +206,7 @@
             {% endif %}
         </div>
         <div>
-            <div class="members flex"><i class="fa-solid fa-user-group"></i><div class="msg">{% user_count_group group.id %}<small>+</small></div> &nbsp;</div>
+            <div class="members flex"><i class="fa-solid fa-eye"></i><div class="msg">{% group_page_count group.id %}<small>+</small></div> &nbsp;</div>
         </div>
     </div>
     <div class="group_name"><b><i>{% if village == 0 %}{{group.leader.name}}{% else %}{{group.village.name}}{% endif %}&nbsp; </i></b>{% if group.leader.image.url != '' and village == 0 %}<img src="{{group.leader.image.url}}" class="profile" alt="">{% elif village == 1  %}<img src="{% static 'img/village.jpg' %}" class="profile" alt=" ">{% else %}<img src="{% static 'img/leader.png' %}" class="profile" alt=" ">{% endif %}</div>
@@ -356,7 +364,6 @@
         {% endif %}
     {% endfor %}
 </div>
-
 <div class="video">
     {% video video.code '160x90' %}
     <div class="live">Live</div>
@@ -464,7 +471,9 @@
     <!-------------------------------------------------------------->
     <!---------------------------footer menu------------------------->
 
-<br>
+    <div class="down"  onclick="go_down()"><i class="fa-solid fa-angles-down"></i></div>
+    
+    <br>
 
     <div class="footer_menu">
         <div><i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-image"></i></div>
@@ -721,6 +730,10 @@
 //////////////////////////////////////////////
 function mobile_modal_lonch(){
     $("#Check_Login_Modal").modal('show')
+}
+
+function go_down(){
+    document.documentElement.scrollTop = document.documentElement.scrollHeight;
 }
 
 </script>
