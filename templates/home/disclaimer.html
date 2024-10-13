@@ -1,0 +1,65 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    KARMALA {
+        color: rgb(0, 85, 255);
+    }
+    .disclaimer-container {
+        margin: 50px auto;
+        max-width: 800px;
+        padding: 20px;
+        border: 1px solid #ff4d4d;
+        border-radius: 8px;
+        background-color: #ffe6e6;
+    }
+    .disclaimer-title {
+        color: #cc0000; /* Dark red for title */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .disclaimer-text {
+        color: #660000; /* Darker red for body text */
+        line-height: 1.6;
+    }
+    .disclaimer-link {
+        color: #cc0000; /* Link color */
+        text-decoration: underline;
+    }
+</style>
+
+{% include 'include/navbar.html' %}
+
+<div class="container disclaimer-container">
+    <h1 class="disclaimer-title">Disclaimer</h1>
+    <p class="disclaimer-text">Welcome to <strong>Digital Karmala</strong>, a chat application. Please note the following disclaimer that governs the use of this platform:</p>
+
+    <h3 class="disclaimer-text">1. No Professional Advice</h3>
+    <p class="disclaimer-text">
+        The information provided on Digital Karmala is for general information purposes only. No content on this app should be construed as professional advice, whether legal, medical, financial, or otherwise. Always seek advice from professionals in the appropriate field before making decisions based on the content within the app.
+    </p>
+
+    <h3 class="disclaimer-text">2. User-Generated Content</h3>
+    <p class="disclaimer-text">
+        Digital Karmala is a chat-based application that allows users to share messages, links, and other forms of content. We do not endorse or verify the accuracy, validity, or reliability of any user-generated content. Any opinions, statements, or information posted by users are solely the views of the respective users and do not reflect the views of Digital Karmala.
+    </p>
+
+    <h3 class="disclaimer-text">3. Limitation of Liability</h3>
+    <p class="disclaimer-text">
+        Under no circumstances shall Digital Karmala or its owners be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use or inability to use the app, or any information obtained through the app, even if advised of the possibility of such damages.
+    </p>
+
+    <h3 class="disclaimer-text">4. Third-Party Links</h3>
+    <p class="disclaimer-text">
+        Digital Karmala may contain links to third-party websites or services. These links are provided for your convenience only. We do not control, endorse, or assume any responsibility for the content, privacy policies, or practices of third-party sites or services. Use these third-party links at your own risk.
+    </p>
+
+    <h3 class="disclaimer-text">5. Changes to the Disclaimer</h3>
+    <p class="disclaimer-text">
+        Digital Karmala reserves the right to modify or update this disclaimer at any time without prior notice. It is your responsibility to periodically review this page for any changes.
+    </p>
+
+    <p class="disclaimer-text">If you have any questions about this disclaimer, feel free to <a href="/contact_us/" class="disclaimer-link">contact us</a>.</p>
+</div>
+{% endblock %}

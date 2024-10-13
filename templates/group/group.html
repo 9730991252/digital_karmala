@@ -513,12 +513,12 @@
     
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-       
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            
         </div>
-      </div>
     </div>
-  </div>
+</div>
+</div>
 
 
 
@@ -527,12 +527,13 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script>
+
     user_id = '{{user.id}}'
     user_name = '{{user.name}}'
     user_village_name = '{{user.village.name}}'
-
+    
     const roomName = JSON.parse(document.getElementById('room-name').value);
-
+    
     const chatSocket = new WebSocket(
         'wss://'
         + window.location.host
@@ -546,7 +547,7 @@
         const data = JSON.parse(e.data)
         console.log('receviced server',data)
         input = document.getElementById('chat-message-input').value;
-            t = `
+        t = `
                  <div class="msg_box mb-3" id='div'>
                       <div class="flex">
                           <div class="user">${data.user_name} : </div>
@@ -555,7 +556,7 @@
                       </div>
                       <div>${data.message}</div>
                       <div class="date">
-                          <div>${new Date().toLocaleString()}</div>
+                        <div>${new Date().toLocaleString()}</div>
                       </div>
                  </div>
             `
@@ -570,7 +571,7 @@
     };
 
     document.querySelector('#chat-message-input').focus();
-
+    
     document.querySelector('#chat-message-input').onkeyup = function(e) {
         if (e.key === 'Enter') {  // enter, return
             document.querySelector('#chat-message-submit').click();
@@ -594,17 +595,17 @@
             document.getElementById('chat-message-submit').style.display = 'flex';
         }
     }
-
-
-
+    
+    
+    
     /**document.querySelector('#chat-message-submit').onclick = function(e) {
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const message = messageInputDom.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
+     const messageInputDom = document.querySelector('#chat-message-input');
+     const message = messageInputDom.value;
+     chatSocket.send(JSON.stringify({
+        'message': message
         }));
         messageInputDom.value = '';
-    };*/
+        };*/
     document.querySelector('#chat-message-submit').onclick = function(e) {
         const messageInputDom = document.querySelector('#chat-message-input');
         const message = messageInputDom.value;
@@ -623,14 +624,14 @@
         messageInputDom.value = '';
         document.documentElement.scrollTop = document.documentElement.scrollHeight;
     }
-
+    
     /////////////////////////// |post-message| ///////////////////////////////////
-
+    
     document.querySelector('#post-message-submit').onclick = function(e) {
         const messageInputDom = document.querySelector('#summernote');
         const message = messageInputDom.value;
         if (message.length > 50000){
-                alert('कृपया कमी  शब्द्ध टाका ')
+            alert('कृपया कमी  शब्द्ध टाका ')
         }
         else{
             if(message == ''){
@@ -648,9 +649,9 @@
             document.documentElement.scrollTop = document.documentElement.scrollHeight;
         }  
     }
-
-
-
+    
+    
+    
     function check_mobile_number(){
         mobile_number = document.getElementById('mobile').value;
         if( mobile_number.length <= 9){
@@ -665,8 +666,8 @@
                 method: "GET",
                 data:{
                     mobile_number:mobile_number
-                      },
-                    success: function(res){
+                },
+                success: function(res){
                         if (res.status == 0){
                             $("#Check_Login_Modal").modal('hide')
                             $("#user_form").modal('show');
@@ -682,32 +683,32 @@
     }
     function chek_box(id){
         $.ajax({
-                url: "{% url 'check_taluka_village' %}",
+            url: "{% url 'check_taluka_village' %}",
                 method: "GET",
                 data:{
                     id:id
-                      },
+                },
                     success: function(res){
                         document.getElementById('village').innerHTML = res.village_list;
                     }
-            })
-    }
-    const textarea = document.querySelector("textarea");
-      textarea.addEventListener("keyup", e =>{
-        textarea.style.height = "63px";
+                })
+            }
+            const textarea = document.querySelector("textarea");
+            textarea.addEventListener("keyup", e =>{
+                textarea.style.height = "63px";
         let scHeight = e.target.scrollHeight;
         textarea.style.height = `${scHeight}px`;
-      });
+    });
 
+    
 
-
-      function reload_page(){
+    function reload_page(){
         location.reload()
-      }
-
-      $(document).ready(function() {
-            $('#summernote').summernote();
-        });
+    }
+    
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
 
     function like_chat(chat_id){
         if(user_id == ''){
@@ -720,20 +721,20 @@
                 data:{
                     chat_id:chat_id,
                     user_id:user_id
-                      },
-                    success: function(res){
-                       document.getElementById('chat_like'+chat_id).innerHTML = res.t
-                    }
+                },
+                success: function(res){
+                    document.getElementById('chat_like'+chat_id).innerHTML = res.t
+                }
             })
         }
     }
-//////////////////////////////////////////////
-function mobile_modal_lonch(){
-    $("#Check_Login_Modal").modal('show')
-}
-
-function go_down(){
-    document.documentElement.scrollTop = document.documentElement.scrollHeight;
+    //////////////////////////////////////////////
+    function mobile_modal_lonch(){
+        $("#Check_Login_Modal").modal('show')
+    }
+    
+    function go_down(){
+        document.documentElement.scrollTop = document.documentElement.scrollHeight;
 }
 
 </script>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Privacy Policy | DigitalKarmala</title>
+    <style>
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7f9; /* Light gray background */
+    color: #333;
+    line-height: 1.8;
+}
+
+/* Policy Section Styles */
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.policy-section {
+    background-color: #ffffff;  /* White background for the content */
+    padding: 40px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
+}
+
+.policy-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.policy-header h2 {
+    font-size: 28px;
+    color: #002855;  /* Dark blue for headers */
+}
+
+.policy-header p {
+    font-size: 14px;
+    color: #666;
+}
+
+.policy-content {
+    color: #333;
+    line-height: 1.7;
+}
+
+.policy-content h3 {
+    margin-top: 20px;
+    color: #002855;  /* Dark blue for sub-headings */
+    font-size: 22px;
+}
+
+.policy-content h4 {
+    margin-top: 15px;
+    color: #00aaff;  /* Bright blue for smaller headings */
+    font-size: 18px;
+}
+
+.policy-content ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+
+.policy-content ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px 0;
+    background-color: #002855;  /* Dark blue for footer */
+    color: #ffffff;
+}
+
+footer p {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+
+{% include 'include/navbar.html' %}
+
+    <!-- Privacy Policy Content -->
+    <div class="wrapper">
+        <section class="policy-section">
+            <header class="policy-header">
+                <h2>Privacy Policy for DigitalKarmala</h2>
+                <p><strong>Last updated:</strong> <span id="last-updated"></span></p>
+            </header>
+            
+            <article class="policy-content">
+                <h3>1. Information We Collect</h3>
+                <p>We may collect the following types of information:</p>
+                <h4>a. Personal Information</h4>
+                <ul>
+                    <li>Account Information: Name, email address, and other contact details.</li>
+                    <li>User-Generated Content: Messages and media files shared during chats.</li>
+                </ul>
+                <h4>b. Non-Personal Information</h4>
+                <ul>
+                    <li>Log Data: IP address, browser type, timestamps, and more.</li>
+                    <li>Cookies: To enhance user experience and session management.</li>
+                </ul>
+
+                <h3>2. How We Use Your Information</h3>
+                <ul>
+                    <li>Service Provision: To maintain chat services.</li>
+                    <li>Communication: Sending updates, security alerts, and support messages.</li>
+                    <li>Improvement: Analyzing user behavior to improve the platform.</li>
+                </ul>
+
+                <h3>3. Sharing Your Information</h3>
+                <p>We do not sell or rent your personal information. However, we may share it under specific circumstances:</p>
+                <ul>
+                    <li>With Service Providers: Third-party services for hosting or analytics.</li>
+                    <li>Legal Obligations: If required to comply with legal processes or to protect our rights.</li>
+                </ul>
+
+
+                <h3>4. Data Retention</h3>
+                <p>We retain personal data only as long as necessary. Once it’s no longer needed, we delete or anonymize it.</p>
+
+                <h3>5. Your Rights</h3>
+                <p>Depending on your location, you may have rights like:</p>
+                <ul>
+                    <li>Access: Request a copy of your data.</li>
+                    <li>Correction: Request updates or corrections.</li>
+                    <li>Deletion: Request data deletion.</li>
+                </ul>
+                <p>To exercise your rights, contact us at <strong><a href="">sunilkale101@gmail.com</a></strong>.</p>
+
+                <h3>6. Third-Party Links</h3>
+                <p>We are not responsible for the privacy practices of external sites. Please review their privacy policies before interacting with them.</p>
+
+                <h3>7. Children's Privacy</h3>
+                <p>Our service is not intended for individuals under 13. If we discover data from a child, we will delete it promptly.</p>
+
+                <h3>8. Changes to This Policy</h3>
+                <p>We may update this policy from time to time. Any updates will be posted here with the modified date.</p>
+
+                <h3>9. Contact Us</h3>
+                <p>If you have any questions, please contact us at <strong><a href="">sunilkale101@gmail.com</a></strong>.</p>
+            </article>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 DigitalKarmala. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set the last updated date dynamically
+document.getElementById("last-updated").textContent = new Date().toLocaleDateString();
+
+    </script>
+</body>
+</html>
