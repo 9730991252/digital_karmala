@@ -48,7 +48,7 @@
     <div class="text-center">
         <form method="POST">{% csrf_token %}
             <div class="mb-3 mt-3">
-                <textarea name="message" id="message" placeholder="message" class="form-control" cols="5"></textarea>
+                <textarea name="message" id="message" placeholder="message" class="form-control" cols="5" required></textarea>
             </div>
             <button type="submit" class="btn btn-success" name="send">Send</button>
         </form>
