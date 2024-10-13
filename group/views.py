@@ -126,7 +126,7 @@ def page_count(group_id):
     if group_id:
         if Page_count.objects.filter(group_id=group_id).exists():
             p = Page_count.objects.filter(group_id=group_id).first()
-            p.count += 500
+            p.count += 1
             p.save()
         else:
             Page_count(
