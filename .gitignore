@@ -124,8 +124,12 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.leader_images
+.chat_images
 env/
 venv/
+leader_images/
+chat_images/
 ENV/
 env.bak/
 venv.bak/
