@@ -1,0 +1,79 @@
+
+<script>
+    let input = document.getElementById('image');
+    let group_id = document.getElementById('group_id').value;
+    let user_id = document.getElementById('user_id').value;
+    WIDTH = 300
+  input.addEventListener("change",(event) => {
+  
+      let image_file = event.target.files[0];
+  
+      let reader = new FileReader();
+  
+      reader.readAsDataURL(image_file);
+  
+      reader.onload = (event) =>{
+          image_url = event.target.result;
+          let image = document.createElement('img');
+  
+          image.src = image_url;
+          
+          image.onload = (e) => {
+  
+              let canvas = document.createElement('canvas');
+              let ratio = WIDTH / image.width;
+              canvas.width = WIDTH;
+              canvas.height = image.height * ratio;
+  
+              let context = canvas.getContext('2d');
+              context.drawImage(image, 0, 0, canvas.width, canvas.height);
+              let new_image_url = canvas.toDataURL('image/jpeg', 98)
+  
+  
+              urlToFile(new_image_url)
+          }
+      }
+  })
+  
+  let urlToFile = (url) =>{
+      let arr = url.split(",")
+      let mime = arr[0].match(/:(.*?);/)[1]
+      let data = arr[1]
+  
+      let dataStr = atob(data)
+      let n = dataStr.length
+      let dataArr = new Uint8Array(n)
+  
+      
+      while(n--)
+      {
+          dataArr[n] = dataStr.charCodeAt(n)
+  
+      }
+    file  = new File([dataArr], 'File.jpg', {type: mime})
+  
+  }
+  
+  
+  function send_ready_file(){
+      var data = new FormData();
+      data.append('low_size',file)
+      data.append('group_id',group_id)
+      data.append('user_id',user_id)
+      $.ajax({
+          url: "{% url 'image_save_user' %}",
+          method: "POST",
+          processData:false,
+          contentType:false,
+          mimeType:"multipart/form-data",
+          data:data,
+          success: function(res){
+            const r = JSON.parse(res);
+            if (r.status == 'ok'){
+                location.reload()
+            }
+          }
+      })
+  
+  }
+  </script>

@@ -1,6 +1,24 @@
 https://github.com/mitchtabian/HOWTO-django-channels-daphne?tab=readme-ov-file#Deploying-Django-Channels-with-Daphne-&-Systemd
 
 
+
+---------------------------------------------------------------------
+How to implement Website Preview/Thumbnail for Social Media sites
+
+https://www.youtube.com/watch?v=RVvfr7aniko
+
+---------------------------------------------------------------------
+
+
 <iframe frameborder="0" src="https://www.youtube.com/embed/LEfqDRphyMc?feature=share" width="240" height="360" class="note-video-clip"></iframe>
 
 <iframe src="https://www.youtube.com" frameborder="0"></iframe>
+
+
+Upload Resized/Compressed Image In Javascript (Base 64 Data URL to File and FormData)
+https://youtu.be/2okUvC2qBWk?si=OQ0ydbu3pH0w-_nZ
+
+
+
+Resize & Compress Images In JAVASCRIPT (Client Side)
+https://youtu.be/tWkWWIlgcyU?si=dTg_Uv5fM_2bVmt9

@@ -426,7 +426,7 @@
 
     <!-------------------------------------------------------------->
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <!--div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -441,6 +441,26 @@
                     <br>
                     <button type="submit" name="send_image"  class="btn btn-transparent"><div class="send_box">></div></button>
                   </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </!--div-->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">फोटो पाठवा </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="group_id" value="{{group.id}}" >
+                    <input type="hidden" id="user_id" value="{{user.id}}" >
+                    <input type="file" class="form-control" id="image">
+                    <br>
+                    <button type="submit" name="send_image" onclick="send_ready_file()"  class="btn btn-transparent"><div class="send_box">></div></button>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -484,8 +504,8 @@
     </div>
     <!---------------------------------------------------->
 {% else %}
-    <div class="footer_menu">
-        <div><a href="/" style="color: black;"><i class="fa-solid fa-house"></i></a></div>
+    <div class="footer_menu" style=" width: 100%;">
+        <div style="margin-left: auto; margin-right: auto;"><a href="/" style="color: black;"><i class="fa-solid fa-house"></i></a></div>
     </div>
 
 {% endif %}
@@ -525,6 +545,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+{% include 'include/user/send_image.html' %}
 
 <script>
 

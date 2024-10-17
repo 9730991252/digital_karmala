@@ -3,6 +3,7 @@ from django.template.loader import *
 from django.shortcuts import *
 from user.models import *
 from group.models import *
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def check_mobile_number(request):
     if request.method == 'GET':
@@ -86,3 +87,25 @@ def show_hide_chat_office(request):
         }
         t = render_to_string('ajax/office/show_hide_chat_office.html', context)
     return JsonResponse({'t': t})
+
+@csrf_exempt
+def image_save_user(request):
+    if request.method == 'POST':
+        im = request.FILES.get('low_size')
+        group_id = request.POST.get('group_id')
+        user_id = request.POST.get('user_id')
+        Chat_images(
+            user_id=user_id,
+            image=im
+        ).save()
+        im = Chat_images.objects.filter(user_id=user_id).last()
+        Chat_message(
+            group_id=group_id,
+            user_id=user_id,
+            image_id=im.id,
+        ).save()
+        status = 'ok'
+    else:
+        status = 'false'
+        
+    return JsonResponse({'status':status})
