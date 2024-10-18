@@ -22,3 +22,9 @@ https://youtu.be/2okUvC2qBWk?si=OQ0ydbu3pH0w-_nZ
 
 Resize & Compress Images In JAVASCRIPT (Client Side)
 https://youtu.be/tWkWWIlgcyU?si=dTg_Uv5fM_2bVmt9
+
+
+----------------------------------------------
+SEO, Sitemaps, Open Graph and Google Analytics - Deployment with Django - Part 12
+
+https://www.youtube.com/watch?v=cY6tApsLZC8

@@ -2,12 +2,15 @@
 {% block head %}
 
 
+{% block image %}https://digitalkarmala.com{{group.leader.image.url}}{% endblock image %}
+
 
 {% endblock head %}
 {% block content %}
 {% load static %}
 {% load home_tag %}
 {% load embed_video_tags %}
+
 <style>
     .group_name_box{
         font-size: larger;
