@@ -2,7 +2,7 @@
 {% block head %}
 
 <meta property="og:image" content="https://digitalkarmala.com{{group.leader.image.url}}">
-
+<meta property="og:image:secure_url" content="https://digitalkarmala.com{{group.leader.image.url}}" />
 
 {% endblock head %}
 {% block content %}
@@ -11,6 +11,11 @@
 {% load embed_video_tags %}
 
 <style>
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
     .group_name_box{
         font-size: larger;
         position: fixed;
@@ -551,7 +556,8 @@
 {% include 'include/user/send_image.html' %}
 
 <script>
-
+    window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "instant" });
+    
     user_id = '{{user.id}}'
     user_name = '{{user.name}}'
     user_village_name = '{{user.village.name}}'
@@ -758,7 +764,8 @@
     }
     
     function go_down(){
-        document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "instant" });
+
 }
 
 </script>
